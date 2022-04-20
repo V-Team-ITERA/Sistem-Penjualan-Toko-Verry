@@ -97,7 +97,7 @@ export default function DaftarBarang({ navigation }) {
   return (
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible2}
       >
@@ -112,73 +112,61 @@ export default function DaftarBarang({ navigation }) {
             flexDirection: "colum",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "10%",
-            marginBottom: "10%"
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft:"8%",
+            marginRight:"8%", 
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+            width: 0,
+            height: 2},
+            shadowOpacity: 0.25,
+            shadowRadius: 4
           }}>
 
-            <View style={{ marginBottom: "5%", paddingRight: "30%" }} >
+            <View style={{ marginTop:"3%", marginBottom: "8%", paddingRight: "5%" }} >
               <Text style={{
                 fontWeight: 650,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "black"
-              }}> Pastikan Memasukan Semua Data
+              }}> Pastikan Anda memasukan semua data
               </Text>
-            </View>
-
-            <View style={{
-              flexDirection: "row",
-              width: "65%",
-              marginTop: "5%",
-              marginBottom: "8%"
-            }}>
               <TouchableOpacity style={{
+                marginTop: "10%",
+                marginLeft:"33%",
                 flex: 1,
-                backgroundColor: "white",
+                backgroundColor: "#F24E1E",
                 borderRadius: 3,
-                borderWidth: 1,
-                borderColor: "#F24E1E",
                 padding: 5,
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft: "10%",
                 width: "40%"
               }}
                 onPress={() => setModalVisible2(!modalVisible2)}>
                 <Text style={{
                   fontWeight: 700,
                   fontSize: 12,
-                  color: "#F24E1E",
+                  color: "white",
                 }}> Ok </Text>
               </TouchableOpacity>
             </View>
+
 
           </View>
 
           <StatusBar style="auto" />
         </View>
       </Modal>
+
+
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible}
       >
         <View style={styles.container}>
-          <View>
-            <TouchableOpacity style={{
-              flex: 1,
-              marginTop: "4.25%",
-              marginLeft: "5%"
-            }} onPress={() => setModalVisible(!modalVisible)}>
-              <Image
-                source={require('../assets/back.png')}
-                style={{
-                  height: 13,
-                  width: 18,
-                  marginBottom: "3%"
-                }}>
-              </Image>
-            </TouchableOpacity>
-          </View>
+          
 
           <View style={{
             backgroundColor: "#F24E1E",
@@ -197,7 +185,7 @@ export default function DaftarBarang({ navigation }) {
                 fontSize: 12,
                 color: "white",
                 marginTop: "3%",
-              }}>  Nama        : </Text>
+              }}>  Nama Barang  : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
@@ -335,7 +323,7 @@ export default function DaftarBarang({ navigation }) {
         </View>
       </Modal >
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible1}
       >
@@ -494,78 +482,58 @@ export default function DaftarBarang({ navigation }) {
           <StatusBar style="auto" />
         </View>
       </Modal >
-      <View>
-        <TouchableOpacity style={{
-          flex: 1,
-          marginTop: "4.25%",
-          marginLeft: "5%"
-        }}>
-          <Image
-            source={require('../assets/back.png')}
-            style={{
-              height: 13,
-              width: 18,
-              marginBottom: "3%"
-            }}>
-          </Image>
-        </TouchableOpacity>
-      </View>
-
       <View style={{
         flexDirection: "row",
-        marginTop: "2%",
+        marginTop: "8%",
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
       }}>
-
+        
         <TouchableOpacity style={{
-          margin: "3%",
-          marginLeft: "15%",
-          marginBottom: "3%"
-        }} onPress={() => setModalVisible1(true)}>
-          <Image
-            source={require('../assets/add.png')}
-            style={{
-              height: 23,
-              width: 25
-            }}>
-          </Image>
-        </TouchableOpacity>
-
-        <TextInput style={{
-          flex: 1,
-          height: 23,
-          padding: 8,
-          borderWidth: 1,
-          borderRadius: 4,
-          fontSize: 12,
-          margin: "3%"
-        }}
-
-          placeholder="cari" >
-        </TextInput>
-
-        <TouchableOpacity style={{
-          margin: "3%",
-          marginLeft: "1%"
-        }}
+          marginTop: "4%",
+          marginLeft: "4%"
+        }}>
           onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
             style={{
-              height: 17,
+              height: 15,
               width: 17,
               marginBottom: "4%"
             }}>
           </Image>
         </TouchableOpacity>
 
+        <Text style={{
+          flex: 1,
+          fontWeight: 700,
+          fontSize: "115%",
+          margin: "3%",
+          marginBottom: "4%"
+        }}>
+          Menu Data Barang
+        </Text>
+
+        <TouchableOpacity style={{
+          margin: "3%",
+          marginLeft: "10%",
+          marginBottom: "3%"
+        }} onPress={() => setModalVisible1(true)}>
+          <Image
+            source={require('../assets/add.png')}
+            style={{
+              height: 25,
+              width: 28
+            }}>
+          </Image>
+        </TouchableOpacity>
       </View>
+
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>ID</DataTable.Title>
           <DataTable.Title>Nama Barang</DataTable.Title>
-          <DataTable.Title>Stock</DataTable.Title>
+          <DataTable.Title>       Stock</DataTable.Title>
           <DataTable.Title >Harga</DataTable.Title>
           <DataTable.Title >Edit</DataTable.Title>
         </DataTable.Header>
@@ -576,7 +544,7 @@ export default function DaftarBarang({ navigation }) {
             <DataTable.Row>
               <DataTable.Cell>{user.KB}</DataTable.Cell>
               <DataTable.Cell>{user.Nama}</DataTable.Cell>
-              <DataTable.Cell>{user.Stock}</DataTable.Cell>
+              <DataTable.Cell>       {user.Stock}</DataTable.Cell>
               <DataTable.Cell>{user.Harga}</DataTable.Cell>
               <DataTable.Cell>
                 <TouchableOpacity style={{
@@ -584,14 +552,11 @@ export default function DaftarBarang({ navigation }) {
                   marginLeft: "1%"
                 }}
                   onPress={() => editUser(user.id, user.Nama, user.KB, user.Stock, user.Batas, user.Harga)}>
-                  <Image
-                    source={require('../assets/Sidebar.png')}
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginBottom: "4%"
-                    }}>
-                  </Image>
+                  <Text style={{
+                    fontWeight: 600,
+                    fontSize: 12,
+                    color: "black",
+                  }}> Edit </Text>
                 </TouchableOpacity>
               </DataTable.Cell>
             </DataTable.Row>
