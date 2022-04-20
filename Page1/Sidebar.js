@@ -22,14 +22,23 @@ export default function Sidebar({ navigation }) {
             flexDirection: "colum",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "10%",
-            marginBottom: "10%"
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft:"8%",
+            marginRight:"8%", 
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+            width: 0,
+            height: 2},
+            shadowOpacity: 0.25,
+            shadowRadius: 4
           }}>
 
-            <View style={{ marginBottom: "5%", paddingRight: "30%" }} >
+            <View style={{ marginBottom: "5%", paddingRight: "5%" }} >
               <Text style={{
                 fontWeight: 650,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "black"
               }}> Apakah Anda yakin ingin keluar ?
               </Text>
@@ -43,8 +52,10 @@ export default function Sidebar({ navigation }) {
             }}>
               <TouchableOpacity style={{
                 flex: 1,
-                backgroundColor: "#F24E1E",
+                backgroundColor: "white",
                 borderRadius: 3,
+                borderWidth: 1,
+                borderColor: "#F24E1E",
                 padding: 5,
                 justifyContent: "center",
                 alignItems: "center",
@@ -53,17 +64,15 @@ export default function Sidebar({ navigation }) {
                 onPress={() => navigation.navigate("Login")}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
-                  color: "white",
+                  fontSize: "90%",
+                  color: "#F24E1E",
                 }}> Ya </Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={{
                 flex: 1,
-                backgroundColor: "white",
+                backgroundColor: "#F24E1E",
                 borderRadius: 3,
-                borderWidth: 1,
-                borderColor: "#F24E1E",
                 padding: 5,
                 justifyContent: "center",
                 alignItems: "center",
@@ -73,8 +82,8 @@ export default function Sidebar({ navigation }) {
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
-                  color: "#F24E1E",
+                  fontSize: "90%",
+                  color: "white",
                 }}> Tidak </Text>
               </TouchableOpacity>
             </View>
