@@ -28,7 +28,8 @@ export default function DaftarBarangPegawai({ navigation }) {
         <View style={styles.container}>
             <View style={{
                 flexDirection: "row",
-                marginTop: "13%",
+                marginTop: "8%",
+                paddingBottom:"3%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
@@ -85,64 +86,45 @@ export default function DaftarBarangPegawai({ navigation }) {
 
 
             </View>
-            <View>
-                <TouchableOpacity style={{
-                    flex: 1,
-                    marginTop: "4.25%",
-                    marginLeft: "5%"
-                }}>
-                    <Image
-                        source={require('../assets/back.png')}
-                        style={{
-                            height: 13,
-                            width: 18,
-                            marginBottom: "3%"
-                        }}>
-                    </Image>
-                </TouchableOpacity>
-            </View>
 
             <View style={{
                 flexDirection: "row",
-                marginTop: "2%",
+                marginTop: "8%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
 
-                <TextInput style={{
-                    flex: 1,
-                    height: 23,
-                    padding: 8,
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    fontSize: 12,
-                    margin: "3%"
-                }}
-
-                    placeholder="cari" >
-                </TextInput>
-
                 <TouchableOpacity style={{
-                    margin: "3%",
-                    marginLeft: "1%"
+                    margin: "4%",
+                    marginLeft: "4%"
                 }}
                     onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
                     <Image
                         source={require('../assets/Sidebar.png')}
                         style={{
-                            height: 17,
+                            height: 15,
                             width: 17,
                             marginBottom: "4%"
                         }}>
                     </Image>
                 </TouchableOpacity>
 
+                <Text style={{
+                    flex: 1,
+                    fontWeight: 700,
+                    fontSize: "115%",
+                    margin: "3%",
+                    marginBottom: "4%"
+                }}>
+                Menu Data Barang
+                </Text>
             </View>
+
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>ID</DataTable.Title>
                     <DataTable.Title>Nama Barang</DataTable.Title>
-                    <DataTable.Title>Stock</DataTable.Title>
+                    <DataTable.Title>       Stock</DataTable.Title>
                     <DataTable.Title >Harga</DataTable.Title>
                 </DataTable.Header>
             </DataTable>
@@ -152,7 +134,7 @@ export default function DaftarBarangPegawai({ navigation }) {
                         <DataTable.Row>
                             <DataTable.Cell>{user.KB}</DataTable.Cell>
                             <DataTable.Cell>{user.Nama}</DataTable.Cell>
-                            <DataTable.Cell>{user.Stock}</DataTable.Cell>
+                            <DataTable.Cell>       {user.Stock}</DataTable.Cell>
                             <DataTable.Cell>{user.Harga}</DataTable.Cell>
                         </DataTable.Row>
                     </DataTable>
