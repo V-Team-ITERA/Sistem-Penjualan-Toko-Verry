@@ -57,15 +57,17 @@ export default function MenuKeuangan({ navigation }) {
 
   return (
     <View style={styles.container}>
+
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible}
       >
         <View style={{
           flex: 1,
           justifyContent: "center",
-          marginTop: 22
+          marginTop: 22,
+         
         }}>
 
           <View style={{
@@ -73,15 +75,24 @@ export default function MenuKeuangan({ navigation }) {
             flexDirection: "colum",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "10%",
-            marginBottom: "10%"
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft:"8%",
+            marginRight:"8%", 
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+            width: 0,
+            height: 2},
+            shadowOpacity: 0.25,
+            shadowRadius: 4
           }}>
 
-            <View style={{ marginBottom: "5%", paddingRight: "30%" }} >
+            <View style={{ marginBottom: "5%", paddingRight: "28%" }} >
               <Text style={{
                 fontWeight: 650,
-                fontSize: 12,
-                color: "black"
+                fontSize: "90%",
+                color: "black",
               }}> Apakah Anda yakin ?
               </Text>
             </View>
@@ -103,7 +114,7 @@ export default function MenuKeuangan({ navigation }) {
               }}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "white",
                 }}> Ya </Text>
               </TouchableOpacity>
@@ -123,7 +134,7 @@ export default function MenuKeuangan({ navigation }) {
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "#F24E1E",
                 }}> Tidak </Text>
               </TouchableOpacity>
@@ -134,85 +145,112 @@ export default function MenuKeuangan({ navigation }) {
           <StatusBar style="auto" />
         </View>
       </Modal>
+
+
+
       <View style={{
         flexDirection: "row",
-        marginTop: "13%",
+        marginTop: "8%",
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
       }}>
-        <Text style={{
-          flex: 1,
-          fontWeight: 700,
-          fontSize: 15,
-          margin: "3%",
-          marginLeft: "5%",
-          marginBottom: "4%"
-        }}>
-          Menu Keuangan
-        </Text>
-
         <TouchableOpacity style={{
-          margin: "3%",
-          marginLeft: "1%"
-        }}>
-          <Image >
-
-          </Image>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{
-          margin: "3%",
-          marginLeft: "1%"
+          marginTop: "4%",
+          marginLeft: "4%"
         }}
           onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
             style={{
-              height: 17,
+              height: 15,
               width: 17,
               marginBottom: "4%"
             }}>
           </Image>
         </TouchableOpacity>
 
+        <Text style={{
+          flex: 1,
+          fontWeight: 700,
+          margin: "3%",
+          fontSize: "115%",
+          marginBottom: "4%"
+        }}>
+          Menu Keuangan
+        </Text>
+
       </View>
-      <ModalSelector
-        style={styles.input}
-        data={bulan}
-        onChange={(option) => {
-          setNewbulan(option.label);
-          const usersCollectionRef2 = collection(db, option.label + newtahun);
-          onSnapshot(usersCollectionRef2, (snapshot) =>
-            setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
-        }}
-      >
-        <TextInput
-          editable={false}
-          value={newbulan}
-        />
-      </ModalSelector>
-      <ModalSelector
-        style={styles.input}
-        data={tahun}
-        onChange={(option) => {
-          setNewtahun(option.label);
-          const usersCollectionRef2 = collection(db, newbulan + option.label);
-          onSnapshot(usersCollectionRef2, (snapshot) =>
-            setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
-        }}
-      >
-        <TextInput
-          editable={false}
-          value={newtahun}
-        />
-      </ModalSelector>
+
+      <View style={{
+              flexDirection: "row",
+              width: "80%",
+              marginLeft:"8%",
+              marginTop: "1%",
+              marginBottom: "1%"
+            }}>
+        <ModalSelector
+          style={{  flex: 1,
+                    borderRadius: 3,
+                    backgroundColor: "#F24E1E",
+                    padding: 5,
+                    margin: "5%"
+                  }}
+          data={bulan}
+          onChange={(option) => {
+            setNewbulan(option.label);
+            const usersCollectionRef2 = collection(db, option.label + newtahun);
+            onSnapshot(usersCollectionRef2, (snapshot) =>
+              setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
+          }}
+        >
+          <TextInput
+            style={{  marginLeft:"10%",
+                      fontWeight: 700,
+                      fontSize: 14,
+                      color: "white"}}
+            editable={false}
+            value={newbulan}
+          />
+
+        </ModalSelector>
+
+
+        <ModalSelector
+          style={{  flex: 0.7,
+                    borderRadius: 3,
+                    backgroundColor: "#F24E1E",
+                    padding: 5,
+                    margin: "5%",
+          }}
+          data={tahun}
+          onChange={(option) => {
+            setNewtahun(option.label);
+            const usersCollectionRef2 = collection(db, newbulan + option.label);
+            onSnapshot(usersCollectionRef2, (snapshot) =>
+              setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
+          }}
+        >
+          <TextInput
+            style={{  marginLeft:"35%",
+                      fontWeight: 700,
+                      fontSize: 14,
+                      color: "white"}}
+            editable={false}
+            value={newtahun}
+          />
+        </ModalSelector>
+        </View>
+
+      
       <DataTable>
-        <DataTable.Header>
+        <DataTable.Header >
+          <DataTable.Title>Tanggal</DataTable.Title>
           <DataTable.Title>ID</DataTable.Title>
-          <DataTable.Title>Nama Barang</DataTable.Title>
-          <DataTable.Title>Stock</DataTable.Title>
+          <DataTable.Title>Total</DataTable.Title>
+          <DataTable.Title>View</DataTable.Title>
         </DataTable.Header>
       </DataTable>
+
       {users.map((user) => {
         return (
           <DataTable>
@@ -220,28 +258,35 @@ export default function MenuKeuangan({ navigation }) {
               <DataTable.Cell>{user.Tanggal}</DataTable.Cell>
               <DataTable.Cell>{user.IdNota}</DataTable.Cell>
               <DataTable.Cell>{user.Total}</DataTable.Cell>
-              <DataTable.Cell><TouchableOpacity style={{
-                backgroundColor: "#F24E1E",
-                borderRadius: 3,
-                padding: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                width: "40%"
-              }}
+              <DataTable.Cell>
+                
+                <TouchableOpacity style={{borderWidth:1,
+                                          backgroundColor: "white",
+                                          borderRadius: 3,
+                                          padding: 5,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          width: "100%"
+                                        }}
                 onPress={() => navigation.navigate("LihatNota", { time: user.IdNota })}>
                 <Text style={{
-                  fontWeight: 700,
+                  fontWeight: 600,
                   fontSize: 12,
-                  color: "white",
-                }}> Print </Text>
+                  color: "black",
+                }}> Detail </Text>
               </TouchableOpacity></DataTable.Cell>
             </DataTable.Row>
           </DataTable>
         );
       })}
+
+
+      <View>
       <TouchableOpacity style={{
         backgroundColor: "#F24E1E",
         borderRadius: 3,
+        margin:"10%",
+        marginLeft:"25%",
         padding: 5,
         justifyContent: "center",
         alignItems: "center",
@@ -250,10 +295,15 @@ export default function MenuKeuangan({ navigation }) {
         onPress={() => setModalVisible(true)}>
         <Text style={{
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: 16,
           color: "white",
         }}> Print </Text>
       </TouchableOpacity>
+
+
+      </View>
+      
+
       <StatusBar style="auto" />
     </View>
   );
