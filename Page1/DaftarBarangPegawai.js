@@ -29,7 +29,7 @@ export default function DaftarBarangPegawai({ navigation }) {
             <View style={{
                 flexDirection: "row",
                 marginTop: "8%",
-                paddingBottom:"3%",
+                paddingBottom:"8%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
@@ -85,39 +85,6 @@ export default function DaftarBarangPegawai({ navigation }) {
                 </TouchableOpacity>
 
 
-            </View>
-
-            <View style={{
-                flexDirection: "row",
-                marginTop: "8%",
-                borderBottomColor: 'lightgray',
-                borderBottomWidth: 1
-            }}>
-
-                <TouchableOpacity style={{
-                    margin: "4%",
-                    marginLeft: "4%"
-                }}
-                    onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
-                    <Image
-                        source={require('../assets/Sidebar.png')}
-                        style={{
-                            height: 15,
-                            width: 17,
-                            marginBottom: "4%"
-                        }}>
-                    </Image>
-                </TouchableOpacity>
-
-                <Text style={{
-                    flex: 1,
-                    fontWeight: 700,
-                    fontSize: "115%",
-                    margin: "3%",
-                    marginBottom: "4%"
-                }}>
-                Menu Data Barang
-                </Text>
             </View>
 
             <DataTable>
