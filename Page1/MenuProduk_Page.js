@@ -129,14 +129,23 @@ export default function MenuProduk({ navigation }) {
             flexDirection: "colum",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "10%",
-            marginBottom: "10%"
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft:"8%",
+            marginRight:"8%", 
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+            width: 0,
+            height: 2},
+            shadowOpacity: 0.25,
+            shadowRadius: 4
           }}>
 
-            <View style={{ marginBottom: "5%", paddingRight: "30%" }} >
+            <View style={{ marginBottom: "5%", paddingRight: "28%" }} >
               <Text style={{
                 fontWeight: 650,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "black"
               }}> Apakah Anda yakin ?
               </Text>
@@ -159,7 +168,7 @@ export default function MenuProduk({ navigation }) {
               }}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "white",
                 }}> Ya </Text>
               </TouchableOpacity>
@@ -179,7 +188,7 @@ export default function MenuProduk({ navigation }) {
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "#F24E1E",
                 }}> Tidak </Text>
               </TouchableOpacity>
@@ -192,14 +201,13 @@ export default function MenuProduk({ navigation }) {
       </Modal>
       <View style={{
         flexDirection: "row",
-        marginTop: "13%",
+        marginTop: "8%",
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
       }}>
 
-        <TouchableOpacity style={{  margin: "3%",
-                                    marginTop:"3%",
-                                    marginLeft: "5%"  }}
+        <TouchableOpacity style={{  marginTop: "4%",
+                                    marginLeft: "4%"   }}
                           onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
@@ -214,52 +222,40 @@ export default function MenuProduk({ navigation }) {
         <Text style={{
           flex: 1,
           fontWeight: 700,
-          fontSize: "105%",
+          fontSize: "115%",
           margin: "3%",
           marginBottom: "4%"
         }}>
-          Menu Penjualan
+          Menu Produk
         </Text>
-
-        <TextInput style={{
-          flex: 1,
-          height: 28,
-          padding: 8,
-          borderWidth: 1,
-          borderRadius: 4,
-          fontSize: "90%",
-          margin: "3%"
-        }}
-
-          placeholder="cari" >
-        </TextInput>
-
-        
-
 
       </View>
 
-      <View style={{ flexDirection: "row" }}>
+      <View style={{
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1}}>
+        <View style={{ flexDirection: "row", marginTop:"3%", marginBottom:"2%" }}>
         <Text style={{
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: "85%",
           color: "black",
-          marginTop: "3%",
+          margin: "3%",
         }}>  Produk : </Text>
         <TextInput style={{
           flex: 1,
           backgroundColor: "white",
           borderRadius: 3,
           borderWidth: 1,
-          padding: 4,
-          fontSize: 10, marginTop: "2%",
+          padding: 5,
+          fontSize: "75%", 
+          marginTop: "2%",
           marginBottom: "2%"
         }} onChangeText={setNewName}
           value={newName}>
         </TextInput>
         <Text style={{
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: "85%",
           color: "black",
           marginTop: "3%",
         }}>  Jumlah : </Text>
@@ -268,33 +264,38 @@ export default function MenuProduk({ navigation }) {
           backgroundColor: "white",
           borderRadius: 3,
           borderWidth: 1,
-          fontSize: 10, marginTop: "2%",
-          marginBottom: "2%"
+          fontSize: "75%", 
+          marginTop: "2%",
+          marginBottom: "8%",
+          width:"50%"
         }} onChangeText={setNewqty}
           value={newqty}>
         </TextInput>
       </View>
+
       <TouchableOpacity style={{
         backgroundColor: "#F24E1E",
-        borderRadius: 3,
-        padding: 5,
+        borderRadius: 15,
+        marginLeft:"33%",
+        marginBottom:"5%",
+        padding: 6,
         justifyContent: "center",
         alignItems: "center",
-        width: "40%"
+        width: "30%"
       }} onPress={() => createUser(newName, newqty, Total)}>
         <Text style={{
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: "85%",
           color: "white",
         }}> Masukan </Text>
         
       </TouchableOpacity>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title style={{ flex: 1.5 }}>ID</DataTable.Title>
-          <DataTable.Title style={{ flex: 3 }}>Nama Barang</DataTable.Title>
-          <DataTable.Title style={{ flex: 1 }}>Qty</DataTable.Title>
-          <DataTable.Title style={{ flex: 2.5 }}>Harga</DataTable.Title>
+          <DataTable.Title style={{ flex: 1 }}>ID</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
+          <DataTable.Title style={{ flex: 0.7 }}>Qty</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.7 }}>Harga</DataTable.Title>
           <DataTable.Title style={{ flex: 1 }}>Edit</DataTable.Title>
           <DataTable.Title style={{ flex: 1 }}>Hapus</DataTable.Title>
         </DataTable.Header>
@@ -304,66 +305,88 @@ export default function MenuProduk({ navigation }) {
           <DataTable>
             <DataTable.Row>
               <DataTable.Cell style={{ flex: 1.5 }}>{user.Id}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 3 }}>{user.Nama}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 3.2 }}>{user.Nama}</DataTable.Cell>
               <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
               <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 1 }}>
-                <TouchableOpacity style={{
-                  margin: "3%",
-                  marginLeft: "1%"
-                }}
+              <DataTable.Cell style={{ flex: 2 }}>
+                <TouchableOpacity style={{borderWidth:1,
+                                          backgroundColor: "white",
+                                          borderRadius: 3,
+                                          padding: 5,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          width: "100%"
+                                        }}
                   onPress={() => editUser(user.id, user.Nama, user.Qty)}>
-                  <Image
-                    source={require('../assets/Sidebar.png')}
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginBottom: "4%"
-                    }}>
-                  </Image>
+                  <Text style={{
+                    fontWeight: 600,
+                    fontSize: 12,
+                    color: "black",
+                  }}> Edit </Text>
                 </TouchableOpacity>
               </DataTable.Cell>
-              <DataTable.Cell style={{ flex: 1 }}>
-                <TouchableOpacity style={{
-                  margin: "3%",
-                  marginLeft: "1%"
-                }}
+              <DataTable.Cell style={{ flex: 2 }}>
+                <TouchableOpacity style={{borderWidth:1,
+                                          backgroundColor: "white",
+                                          borderRadius: 3,
+                                          padding: 5,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          width: "101%"
+                                        }}
                   onPress={() => deleteUser(user.id)}>
-                  <Image
-                    source={require('../assets/add.png')}
-                    style={{
-                      height: 17,
-                      width: 17,
-                      marginBottom: "4%"
-                    }}>
-                  </Image>
+                  <Text style={{
+                    fontWeight: 600,
+                    fontSize: 12,
+                    color: "black",
+                  }}> Hapus </Text>
                 </TouchableOpacity>
               </DataTable.Cell>
             </DataTable.Row>
           </DataTable>
         );
       })}
-      <View>
-        <Text>Total</Text>
-        {Total}
-      </View>
-      <TouchableOpacity style={{
-        backgroundColor: "#F24E1E",
-        borderRadius: 3,
-        padding: 5,
-        justifyContent: "center",
-        alignItems: "center",
-        width: "40%"
-      }}
-        onPress={() => setModalVisible(true)}>
+      
+      <View style={{  
+        borderTopColor: 'lightgray',
+        borderTopWidth: 1,
+        marginTop:"20%"   }}>
+      <View style={{  flexDirection:"row"}}>
         <Text style={{
+          flex:1,
           fontWeight: 700,
-          fontSize: 12,
-          color: "white",
-        }}> Print </Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-    </View>
+          fontSize: "95%",
+          color: "black",
+          margin: "3%",
+        }}>Total</Text>
+
+        <Text style={{
+          flex:1,
+          fontWeight: 500,
+          fontSize: "95%",
+          color: "black",
+          margin: "3%",
+        }}> Rp.  {Total} </Text>
+      </View>
+
+      <TouchableOpacity style={{ 
+          backgroundColor: "#F24E1E",
+          borderRadius: 3,
+          margin:"3%",
+          padding: 5,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "40%"
+        }}
+          onPress={() => setModalVisible(true)}>
+          <Text style={{
+            fontWeight: 700,
+            fontSize: 16,
+            color: "white",
+          }}> Print </Text>
+        </TouchableOpacity>
+      </View>
+
   );
 }
 
