@@ -362,7 +362,7 @@ export default function DaftarBarang({ navigation }) {
                 fontSize: 12,
                 color: "white",
                 marginTop: "3%",
-              }}>  Nama        : </Text>
+              }}>  Nama Barang  : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
