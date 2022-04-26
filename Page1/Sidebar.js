@@ -7,7 +7,7 @@ export default function Sidebar({ navigation }) {
   return (
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible}
       >
@@ -123,11 +123,11 @@ export default function Sidebar({ navigation }) {
             </Image>
             <Text style={{
               fontWeight: 500,
-              fontSize: 12,
+              fontSize: "90%",
               color: "white",
               marginLeft: "3%",
               marginTop: "1.5%"
-            }}> Menu Produk
+            }}> Menu Penjualan
             </Text>
           </View>
         </TouchableOpacity>
@@ -146,7 +146,7 @@ export default function Sidebar({ navigation }) {
             </Image>
             <Text style={{
               fontWeight: 500,
-              fontSize: 12,
+              fontSize: "90%",
               color: "white",
               marginLeft: "3%",
               marginTop: "9.5%"
@@ -169,7 +169,7 @@ export default function Sidebar({ navigation }) {
             </Image>
             <Text style={{
               fontWeight: 500,
-              fontSize: 12,
+              fontSize: "90%",
               color: "white",
               marginLeft: "3%",
               marginTop: "9.5%"
@@ -193,7 +193,7 @@ export default function Sidebar({ navigation }) {
           </Image>
           <Text style={{
             fontWeight: 500,
-            fontSize: 12,
+            fontSize: "90%",
             color: "white",
             marginLeft: "3.5%",
             marginTop: "9.5%"
