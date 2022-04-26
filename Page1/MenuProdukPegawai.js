@@ -417,7 +417,7 @@ export default function MenuProdukPegawai({ navigation }) {
                     fontWeight: 700,
                     fontSize: 16,
                     color: "white",
-                }}> Print </Text>
+                }}> Cetak </Text>
                 </TouchableOpacity>
             </View>
 
