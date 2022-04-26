@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc, onSnapshot,
 } from "firebase/firestore";
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function DaftarBarang({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -167,6 +168,23 @@ export default function DaftarBarang({ navigation }) {
       >
         <View style={styles.container}>
           
+        <View>
+            <TouchableOpacity style={{
+              flex: 1,
+              marginTop: "4.25%",
+              marginLeft: "5%"
+            }} onPress={() => setModalVisible(!modalVisible)}>
+              <Image
+                source={require('../assets/back.png')}
+                style={{
+                  height: 13,
+                  width: 18,
+                  marginBottom: "3%"
+                }}>
+              </Image>
+            </TouchableOpacity>
+          </View>
+          
 
           <View style={{
             backgroundColor: "#F24E1E",
@@ -182,16 +200,16 @@ export default function DaftarBarang({ navigation }) {
             }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Nama Barang  : </Text>
+              }}> ID Barang         : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewNama}
                 value={newNama}>
@@ -201,16 +219,16 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Kode Barang   : </Text>
+              }}> Nama Barang   : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewKB}
                 value={newKB}>
@@ -220,16 +238,16 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Stock                : </Text>
+              }}>  Stok                   : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewStock}
                 value={newStock}>
@@ -239,7 +257,7 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
               }}>  Batas                : </Text>
@@ -248,7 +266,7 @@ export default function DaftarBarang({ navigation }) {
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewBatas}
                 value={newBatas}>
@@ -259,7 +277,7 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
               }}> Harga               : </Text>
@@ -268,7 +286,7 @@ export default function DaftarBarang({ navigation }) {
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewHarga}
                 value={newHarga}>
@@ -289,7 +307,7 @@ export default function DaftarBarang({ navigation }) {
               >
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "#F24E1E",
                 }}> Hapus </Text>
               </TouchableOpacity>
@@ -309,7 +327,7 @@ export default function DaftarBarang({ navigation }) {
                 }>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "#F24E1E",
                 }}> Selesai </Text>
               </TouchableOpacity>
@@ -322,6 +340,8 @@ export default function DaftarBarang({ navigation }) {
           <StatusBar style="auto" />
         </View>
       </Modal >
+
+
       <Modal
         animationType="none"
         transparent={true}
@@ -359,16 +379,16 @@ export default function DaftarBarang({ navigation }) {
             }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Nama Barang  : </Text>
+              }}> ID Barang         : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewNama}
                 value={newNama}>
@@ -378,16 +398,16 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Kode Barang   : </Text>
+              }}> Nama Barang    : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewKB}
                 value={newKB}>
@@ -397,16 +417,16 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Stock                : </Text>
+              }}>  Stok                   : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewStock}
                 value={newStock}>
@@ -416,16 +436,16 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
-              }}>  Batas                : </Text>
+              }}> Batas                 : </Text>
               <TextInput style={{
                 flex: 1,
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewBatas}
                 value={newBatas}>
@@ -436,7 +456,7 @@ export default function DaftarBarang({ navigation }) {
             <View style={{ flexDirection: "row" }}>
               <Text style={{
                 fontWeight: 700,
-                fontSize: 12,
+                fontSize: "90%",
                 color: "white",
                 marginTop: "3%",
               }}> Harga               : </Text>
@@ -445,7 +465,7 @@ export default function DaftarBarang({ navigation }) {
                 backgroundColor: "white",
                 borderRadius: 3,
                 padding: 4,
-                fontSize: 10, marginTop: "2%",
+                fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
               }} onChangeText={setNewHarga}
                 value={newHarga}>
@@ -453,7 +473,12 @@ export default function DaftarBarang({ navigation }) {
             </View>
 
             <View style={{ flexDirection: "row", width: "65%", marginTop: "5%", marginBottom: "8%" }}>
-
+              <Text style={{
+                  fontWeight: 700,
+                  fontSize: "90%",
+                  color: "white",
+                  marginTop: "3%",
+                }}>                  </Text>
               <TouchableOpacity style={{
                 flex: 1,
                 backgroundColor: "white",
@@ -461,7 +486,7 @@ export default function DaftarBarang({ navigation }) {
                 padding: 5,
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft: 30,
+                marginLeft: "30%",
                 width: "40%"
               }}
                 onPress={() =>
@@ -469,7 +494,7 @@ export default function DaftarBarang({ navigation }) {
                 }>
                 <Text style={{
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: "90%",
                   color: "#F24E1E",
                 }}> Selesai </Text>
               </TouchableOpacity>
@@ -482,17 +507,18 @@ export default function DaftarBarang({ navigation }) {
           <StatusBar style="auto" />
         </View>
       </Modal >
+
       <View style={{
         flexDirection: "row",
         marginTop: "8%",
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
       }}>
-        
+
         <TouchableOpacity style={{
           marginTop: "4%",
           marginLeft: "4%"
-        }}>
+        }}
           onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
@@ -527,17 +553,19 @@ export default function DaftarBarang({ navigation }) {
             }}>
           </Image>
         </TouchableOpacity>
-      </View>
 
+      </View>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>ID</DataTable.Title>
           <DataTable.Title>Nama Barang</DataTable.Title>
-          <DataTable.Title>       Stock</DataTable.Title>
-          <DataTable.Title >Harga</DataTable.Title>
-          <DataTable.Title >Edit</DataTable.Title>
+          <DataTable.Title>       Stok</DataTable.Title>
+          <DataTable.Title>Harga</DataTable.Title>
+          <DataTable.Title > </DataTable.Title>
         </DataTable.Header>
       </DataTable>
+
+      <ScrollView>
       {users.map((user) => {
         return (
           <DataTable>
@@ -547,14 +575,18 @@ export default function DaftarBarang({ navigation }) {
               <DataTable.Cell>       {user.Stock}</DataTable.Cell>
               <DataTable.Cell>{user.Harga}</DataTable.Cell>
               <DataTable.Cell>
-                <TouchableOpacity style={{
-                  margin: "3%",
-                  marginLeft: "1%"
+                <TouchableOpacity style={{borderWidth:1,
+                                          backgroundColor: "white",
+                                          borderRadius: 3,
+                                          padding: 5,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          width: "100%"
                 }}
                   onPress={() => editUser(user.id, user.Nama, user.KB, user.Stock, user.Batas, user.Harga)}>
                   <Text style={{
                     fontWeight: 600,
-                    fontSize: 12,
+                    fontSize: "90%",
                     color: "black",
                   }}> Edit </Text>
                 </TouchableOpacity>
@@ -563,6 +595,8 @@ export default function DaftarBarang({ navigation }) {
           </DataTable>
         );
       })}
+      </ScrollView>
+
       <StatusBar style="auto" />
     </View >
   );
