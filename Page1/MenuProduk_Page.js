@@ -10,6 +10,8 @@ import {
   deleteDoc,
   doc, onSnapshot,
 } from "firebase/firestore";
+import { Row } from "react-native-table-component";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function MenuProduk({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -111,10 +113,13 @@ export default function MenuProduk({ navigation }) {
       ),
     []
   );
+
+
   return (
     <View style={styles.container}>
+
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={true}
         visible={modalVisible}
       >
@@ -146,7 +151,7 @@ export default function MenuProduk({ navigation }) {
               <Text style={{
                 fontWeight: 650,
                 fontSize: "90%",
-                color: "black"
+                color: "black",
               }}> Apakah Anda yakin ?
               </Text>
             </View>
@@ -199,6 +204,8 @@ export default function MenuProduk({ navigation }) {
           <StatusBar style="auto" />
         </View>
       </Modal>
+
+ 
       <View style={{
         flexDirection: "row",
         marginTop: "8%",
@@ -207,7 +214,7 @@ export default function MenuProduk({ navigation }) {
       }}>
 
         <TouchableOpacity style={{  marginTop: "4%",
-                                    marginLeft: "4%"   }}
+                                    marginLeft: "4%"  }}
                           onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
@@ -226,11 +233,11 @@ export default function MenuProduk({ navigation }) {
           margin: "3%",
           marginBottom: "4%"
         }}>
-          Menu Produk
+          Menu Penjualan
         </Text>
 
       </View>
-
+        
       <View style={{
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1}}>
@@ -240,9 +247,9 @@ export default function MenuProduk({ navigation }) {
           fontSize: "85%",
           color: "black",
           margin: "3%",
-        }}>  Produk : </Text>
+        }}>  Barang : </Text>
         <TextInput style={{
-          flex: 1,
+          flex:1,
           backgroundColor: "white",
           borderRadius: 3,
           borderWidth: 1,
@@ -257,16 +264,18 @@ export default function MenuProduk({ navigation }) {
           fontWeight: 700,
           fontSize: "85%",
           color: "black",
-          marginTop: "3%",
+          margin: "3%",
         }}>  Jumlah : </Text>
         <TextInput style={{
-          flex: 1,
+          flex:1,
           backgroundColor: "white",
           borderRadius: 3,
           borderWidth: 1,
+          padding: 5,
           fontSize: "75%", 
           marginTop: "2%",
-          marginBottom: "8%",
+          marginBottom: "2%",
+          marginRight:"8%",
           width:"50%"
         }} onChangeText={setNewqty}
           value={newqty}>
@@ -287,19 +296,23 @@ export default function MenuProduk({ navigation }) {
           fontWeight: 700,
           fontSize: "85%",
           color: "white",
-        }}> Masukan </Text>
-        
+        }}> Masukan </Text>        
       </TouchableOpacity>
+      </View>
+
+
       <DataTable>
         <DataTable.Header>
           <DataTable.Title style={{ flex: 1 }}>ID</DataTable.Title>
           <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
           <DataTable.Title style={{ flex: 0.7 }}>Qty</DataTable.Title>
           <DataTable.Title style={{ flex: 1.7 }}>Harga</DataTable.Title>
-          <DataTable.Title style={{ flex: 1 }}>Edit</DataTable.Title>
-          <DataTable.Title style={{ flex: 1 }}>Hapus</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.5 }}>Edit</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.4 }}>Hapus</DataTable.Title>
         </DataTable.Header>
       </DataTable>
+
+      <ScrollView>
       {users2.map((user) => {
         return (
           <DataTable>
@@ -308,7 +321,7 @@ export default function MenuProduk({ navigation }) {
               <DataTable.Cell style={{ flex: 3.2 }}>{user.Nama}</DataTable.Cell>
               <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
               <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 2 }}>
+              <DataTable.Cell style={{ flex: 2.5 }}>
                 <TouchableOpacity style={{borderWidth:1,
                                           backgroundColor: "white",
                                           borderRadius: 3,
@@ -320,12 +333,12 @@ export default function MenuProduk({ navigation }) {
                   onPress={() => editUser(user.id, user.Nama, user.Qty)}>
                   <Text style={{
                     fontWeight: 600,
-                    fontSize: 12,
+                    fontSize: "90%",
                     color: "black",
                   }}> Edit </Text>
                 </TouchableOpacity>
               </DataTable.Cell>
-              <DataTable.Cell style={{ flex: 2 }}>
+              <DataTable.Cell style={{ flex: 2.5 }}>
                 <TouchableOpacity style={{borderWidth:1,
                                           backgroundColor: "white",
                                           borderRadius: 3,
@@ -337,7 +350,7 @@ export default function MenuProduk({ navigation }) {
                   onPress={() => deleteUser(user.id)}>
                   <Text style={{
                     fontWeight: 600,
-                    fontSize: 12,
+                    fontSize: "90%",
                     color: "black",
                   }}> Hapus </Text>
                 </TouchableOpacity>
@@ -346,7 +359,9 @@ export default function MenuProduk({ navigation }) {
           </DataTable>
         );
       })}
-      
+      </ScrollView>
+
+
       <View style={{  
         borderTopColor: 'lightgray',
         borderTopWidth: 1,
@@ -373,6 +388,7 @@ export default function MenuProduk({ navigation }) {
           backgroundColor: "#F24E1E",
           borderRadius: 3,
           margin:"3%",
+          marginLeft:"54%",
           padding: 5,
           justifyContent: "center",
           alignItems: "center",
@@ -381,12 +397,14 @@ export default function MenuProduk({ navigation }) {
           onPress={() => setModalVisible(true)}>
           <Text style={{
             fontWeight: 700,
-            fontSize: 16,
+            fontSize: "95%",
             color: "white",
           }}> Print </Text>
         </TouchableOpacity>
       </View>
 
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
