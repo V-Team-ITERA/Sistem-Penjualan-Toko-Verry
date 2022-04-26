@@ -28,41 +28,43 @@ export default function Login({ navigation }) {
             marginTop: "25%",
           }}>
         </Image>
-      </View>
-
-      <View style={{ flexDirection: "columnn", padding: "8%" }}>
+        
         <Text style={{
           flex: 1,
           fontWeight: 700,
           fontSize: "170%",
-          marginTop: "10%",
-          marginBottom: "25%"
+          marginTop: "5%",
+          marginBottom: "15%"
         }}>
-          Masuk
+          Toko Verry
         </Text>
+      </View>
 
-        <Text style={{ flex: 1, fontSize: "100%" }}> Username  </Text>
+      <View style={{ flexDirection: "columnn", padding: "8%" }}>
+        
+
+        <Text style={{ flex: 1, fontSize: "90%" }}> Nama Pengguna  </Text>
 
         <TextInput style={{
           flex: 1,
           borderWidth: 1,
           borderRadius: 6,
           padding: 8,
-          fontSize: "100%",
+          fontSize: "90%",
           marginBottom: "5%"
         }}
           onChangeText={setNewUsername}
           value={newUsername}>
         </TextInput>
 
-        <Text style={{ flex: 1, fontSize: "100%" }}> Password  </Text>
+        <Text style={{ flex: 1, fontSize: "90%" }}> Kata Sandi  </Text>
 
         <TextInput style={{
           flex: 1,
           borderWidth: 1,
           borderRadius: 6,
           padding: 8,
-          fontSize: "100%",
+          fontSize: "90%",
           marginBottom: "10%"
         }}
           secureTextEntry={true}
