@@ -10,6 +10,7 @@ import {
     deleteDoc,
     doc, onSnapshot,
 } from "firebase/firestore";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function LihatNota({ navigation, route }) {
     const { time } = route.params;
@@ -28,7 +29,7 @@ export default function LihatNota({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Modal
-                animationType="slide"
+                animationType="none"
                 transparent={true}
                 visible={modalVisible}
             >
@@ -43,14 +44,23 @@ export default function LihatNota({ navigation, route }) {
                         flexDirection: "colum",
                         justifyContent: "center",
                         alignItems: "center",
-                        marginTop: "10%",
-                        marginBottom: "10%"
+                        paddingTop: "7%",
+                        paddingBottom: "3%",
+                        marginLeft:"8%",
+                        marginRight:"8%", 
+                        borderRadius: 10,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                        width: 0,
+                        height: 2},
+                        shadowOpacity: 0.25,
+                        shadowRadius: 4
                     }}>
 
-                        <View style={{ marginBottom: "5%", paddingRight: "30%" }} >
+                        <View style={{ marginBottom: "5%", paddingRight: "28%" }} >
                             <Text style={{
                                 fontWeight: 650,
-                                fontSize: 12,
+                                fontSize: "90%",
                                 color: "black"
                             }}> Apakah Anda yakin ?
                             </Text>
@@ -73,7 +83,7 @@ export default function LihatNota({ navigation, route }) {
                             }}>
                                 <Text style={{
                                     fontWeight: 700,
-                                    fontSize: 12,
+                                    fontSize: "90%",
                                     color: "white",
                                 }}> Ya </Text>
                             </TouchableOpacity>
@@ -93,7 +103,7 @@ export default function LihatNota({ navigation, route }) {
                                 onPress={() => setModalVisible(!modalVisible)}>
                                 <Text style={{
                                     fontWeight: 700,
-                                    fontSize: 12,
+                                    fontSize: "90%",
                                     color: "#F24E1E",
                                 }}> Tidak </Text>
                             </TouchableOpacity>
@@ -104,51 +114,50 @@ export default function LihatNota({ navigation, route }) {
                     <StatusBar style="auto" />
                 </View>
             </Modal>
+
             <View style={{
                 flexDirection: "row",
-                marginTop: "13%",
+                marginTop: "8%",
+                paddingBottom:"5%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
+                
+            <TouchableOpacity style={{
+                flex: 1,
+                marginTop: "4.25%",
+                marginLeft: "5%"
+                }}
+                onPress={() => navigation.navigate("MenuKeuangan")}>
+                <Image
+                    source={require('../assets/back.png')}
+                    style={{
+                    height: 13,
+                    width: 18,
+                    marginBottom: "5%"
+                    }}>
+                </Image>
+            </TouchableOpacity>
+
+            
+            <TouchableOpacity style={{
+                flex:1,
+                backgroundColor: "#F24E1E",
+                borderRadius: 3,
+                marginLeft:"18%",
+                marginRight:"5%",
+                padding: 3,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "40%"
+            }}
+                onPress={() => setModalVisible(true)}>
                 <Text style={{
-                    flex: 1,
                     fontWeight: 700,
-                    fontSize: 15,
-                    margin: "3%",
-                    marginLeft: "5%",
-                    marginBottom: "4%"
-                }}>
-                    Menu Produk
-                </Text>
-
-                <TextInput style={{
-                    flex: 1,
-                    height: 23,
-                    padding: 8,
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    fontSize: 12,
-                    margin: "3%"
-                }}
-
-                    placeholder="cari" >
-                </TextInput>
-
-                <TouchableOpacity style={{
-                    margin: "3%",
-                    marginLeft: "1%"
-                }}
-                    onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
-                    <Image
-                        source={require('../assets/Sidebar.png')}
-                        style={{
-                            height: 17,
-                            width: 17,
-                            marginBottom: "4%"
-                        }}>
-                    </Image>
-                </TouchableOpacity>
-
+                    fontSize: "80%",
+                    color: "white",
+                    }}> Cetak </Text>
+            </TouchableOpacity>
 
             </View>
             <DataTable>
@@ -159,6 +168,8 @@ export default function LihatNota({ navigation, route }) {
                     <DataTable.Title style={{ flex: 2.5 }}>Harga</DataTable.Title>
                 </DataTable.Header>
             </DataTable>
+
+            <ScrollView>
             {users2.map((user) => {
                 return (
                     <DataTable>
@@ -171,21 +182,9 @@ export default function LihatNota({ navigation, route }) {
                     </DataTable>
                 );
             })}
-            <TouchableOpacity style={{
-                backgroundColor: "#F24E1E",
-                borderRadius: 3,
-                padding: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                width: "40%"
-            }}
-                onPress={() => setModalVisible(true)}>
-                <Text style={{
-                    fontWeight: 700,
-                    fontSize: 12,
-                    color: "white",
-                }}> Print </Text>
-            </TouchableOpacity>
+            </ScrollView>
+      
+
             <StatusBar style="auto" />
         </View>
     );
