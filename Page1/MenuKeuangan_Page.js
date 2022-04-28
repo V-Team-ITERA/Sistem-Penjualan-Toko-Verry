@@ -11,6 +11,7 @@ import {
   deleteDoc,
   doc, onSnapshot,
 } from "firebase/firestore";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function MenuKeuangan({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -206,7 +207,7 @@ export default function MenuKeuangan({ navigation }) {
           <TextInput
             style={{  marginLeft:"10%",
                       fontWeight: 700,
-                      fontSize: 14,
+                      fontSize: "105%",
                       color: "white"}}
             editable={false}
             value={newbulan}
@@ -220,7 +221,7 @@ export default function MenuKeuangan({ navigation }) {
                     borderRadius: 3,
                     backgroundColor: "#F24E1E",
                     padding: 5,
-                    margin: "5%",
+                    margin: "5%"
           }}
           data={tahun}
           onChange={(option) => {
@@ -231,9 +232,9 @@ export default function MenuKeuangan({ navigation }) {
           }}
         >
           <TextInput
-            style={{  marginLeft:"35%",
+            style={{  marginLeft:"30%",
                       fontWeight: 700,
-                      fontSize: 14,
+                      fontSize: "105%",
                       color: "white"}}
             editable={false}
             value={newtahun}
@@ -241,52 +242,60 @@ export default function MenuKeuangan({ navigation }) {
         </ModalSelector>
         </View>
 
-      
+      <View style={{
+              borderBottomColor: 'lightgray',
+              borderBottomWidth: 1}}>
+
+      </View>
       <DataTable>
         <DataTable.Header >
           <DataTable.Title>Tanggal</DataTable.Title>
           <DataTable.Title>ID</DataTable.Title>
           <DataTable.Title>Total</DataTable.Title>
-          <DataTable.Title>View</DataTable.Title>
+          <DataTable.Title> </DataTable.Title>
         </DataTable.Header>
       </DataTable>
 
-      {users.map((user) => {
-        return (
-          <DataTable>
-            <DataTable.Row>
-              <DataTable.Cell>{user.Tanggal}</DataTable.Cell>
-              <DataTable.Cell>{user.IdNota}</DataTable.Cell>
-              <DataTable.Cell>{user.Total}</DataTable.Cell>
-              <DataTable.Cell>
-                
-                <TouchableOpacity style={{borderWidth:1,
-                                          backgroundColor: "white",
-                                          borderRadius: 3,
-                                          padding: 5,
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                          width: "100%"
-                                        }}
-                onPress={() => navigation.navigate("LihatNota", { time: user.IdNota })}>
-                <Text style={{
-                  fontWeight: 600,
-                  fontSize: 12,
-                  color: "black",
-                }}> Detail </Text>
-              </TouchableOpacity></DataTable.Cell>
-            </DataTable.Row>
-          </DataTable>
-        );
-      })}
+      <ScrollView>
+        {users.map((user) => {
+          return (
+              <DataTable>
+                <DataTable.Row>
+                  <DataTable.Cell>{user.Tanggal}</DataTable.Cell>
+                  <DataTable.Cell>{user.IdNota}</DataTable.Cell>
+                  <DataTable.Cell>{user.Total}</DataTable.Cell>
+                  <DataTable.Cell>
+                    
+                    <TouchableOpacity style={{borderWidth:1,
+                                              backgroundColor: "white",
+                                              borderRadius: 3,
+                                              padding: 5,
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              width: "100%"
+                                            }}
+                    onPress={() => navigation.navigate("LihatNota", { time: user.IdNota })}>
+                    <Text style={{
+                      fontWeight: 600,
+                      fontSize: "85%",
+                      color: "black",
+                    }}> Detail </Text>
+                  </TouchableOpacity>
+                  </DataTable.Cell>
+                </DataTable.Row>   
+              </DataTable>
+          );
+        })}
+      </ScrollView>
 
 
-      <View>
+      <View style={{  borderTopColor: 'lightgray',
+                      borderTopWidth: 1}}>
       <TouchableOpacity style={{
         backgroundColor: "#F24E1E",
         borderRadius: 3,
-        margin:"10%",
-        marginLeft:"25%",
+        margin:"7%",
+        marginLeft:"27%",
         padding: 5,
         justifyContent: "center",
         alignItems: "center",
@@ -295,12 +304,10 @@ export default function MenuKeuangan({ navigation }) {
         onPress={() => setModalVisible(true)}>
         <Text style={{
           fontWeight: 700,
-          fontSize: 16,
+          fontSize: "95%",
           color: "white",
-        }}> Print </Text>
+        }}> Cetak </Text>
       </TouchableOpacity>
-
-
       </View>
       
 
