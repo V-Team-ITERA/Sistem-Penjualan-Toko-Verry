@@ -4,6 +4,12 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-na
 
 export default function Sidebar({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const yakeluar = async () => {
+    setModalVisible(false);
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -24,13 +30,14 @@ export default function Sidebar({ navigation }) {
             alignItems: "center",
             paddingTop: "7%",
             paddingBottom: "3%",
-            marginLeft:"8%",
-            marginRight:"8%", 
+            marginLeft: "8%",
+            marginRight: "8%",
             borderRadius: 10,
             shadowColor: "#000",
             shadowOffset: {
-            width: 0,
-            height: 2},
+              width: 0,
+              height: 2
+            },
             shadowOpacity: 0.25,
             shadowRadius: 4
           }}>
@@ -61,7 +68,7 @@ export default function Sidebar({ navigation }) {
                 alignItems: "center",
                 width: "40%"
               }}
-                onPress={() => navigation.navigate("Login")}>
+                onPress={() => yakeluar()}>
                 <Text style={{
                   fontWeight: 700,
                   fontSize: "90%",
