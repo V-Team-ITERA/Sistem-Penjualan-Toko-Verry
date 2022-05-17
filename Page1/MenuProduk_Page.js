@@ -14,27 +14,30 @@ import { Row } from "react-native-table-component";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function MenuProduk({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [newName, setNewName] = useState('');
-  const [newqty, setNewqty] = useState('');
-  const [newid, setNewid] = useState('Awal');
-  const [users, setUsers] = useState([]);
-  const [users2, setUsers2] = useState([]);
-  const [Total, setTotal] = useState(0);
-
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const bulan = months[new Date().getMonth()];
   const year = new Date().getFullYear();
   const time = bulan + new Date().getDate() + new Date().getHours() + new Date().getMinutes()
   const tanggal = new Date().getDate();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newqty, setNewqty] = useState('');
+  const [newid, setNewid] = useState('Awal');
+  const [users, setUsers] = useState([]);
+  const [users1, setUsers1] = useState([]);
+  const [users2, setUsers2] = useState([]);
+  const [Total, setTotal] = useState(0);
+  const [waktu, setwaktu] = useState(time);
   const usersCollectionRef = collection(db, "Produk");
   const usersCollectionRef2 = collection(db, bulan + year);
-  const usersCollectionRef1 = collection(db, time);
+  const [usersCollectionRef1, setusersCollectionRef1] = useState(collection(db, waktu));
 
-  const editUser = async (id, Nama, Qty) => {
+  const editUser = async (id, Nama, Qty, Harga) => {
     const userDoc = doc(db, newid, id);
+    const stocklama = Number(Qty);
     setNewName(Nama);
     setNewqty(Qty);
+    setTotal(Total - Harga);
     {
       users.map((user) => {
         if (user.Nama == newName) {
@@ -43,25 +46,52 @@ export default function MenuProduk({ navigation }) {
             Nama: user.Nama,
             Qty: newqty,
             Harga: newqty * user.Harga
-          })
+          });
+          setTotal(Total + newqty * user.Harga);
           setNewName('');
           setNewqty('');
-          updateDoc(doc(db, "Produk", user.id), { Stock: user.Stock - newqty });
+          updateDoc(doc(db, "Produk", user.id), { Stock: user.Stock - newqty + stocklama });
         }
       })
     }
   };
 
-  const deleteUser = async (id) => {
+  const ceknota = async (x, y) => {
+    setNewid('Awal');
+    const xy = bulan + new Date().getDate() + new Date().getHours() + new Date().getMinutes();
+    setwaktu(xy);
+    setusersCollectionRef1(collection(db, waktu));
+    setUsers2([]);
+    setTotal(0);
+    {
+      users1.map((user) => {
+        if (user.IdNota == x) {
+          updateDoc(doc(db, bulan + year, user.id), { Total: y });
+        }
+      })
+    }
+    navigation.navigate("LihatNota", { time: x })
+  }
+
+  const deleteUser = async (id, Harga, Qty, Nama) => {
     const userDoc = doc(db, newid, id);
     deleteDoc(userDoc);
+    const stocklama = Number(Qty);
+    setTotal(Total - Harga);
+    users.map((user) => {
+      if (user.Nama == Nama) {
+        updateDoc(doc(db, "Produk", user.id), { Stock: user.Stock + stocklama });
+      }
+    })
   };
 
   const createUser = async (newName, newqty, Total) => {
     if (newid == 'Awal') {
-      addDoc(usersCollectionRef2, { Total: 0, IdNota: time, Tanggal: tanggal });
-      setNewid(time);
-      const usersCollectionRef1 = collection(db, time);
+      addDoc(usersCollectionRef2, { Total: 0, IdNota: waktu, Tanggal: tanggal });
+      setNewid(waktu);
+      const usersCollectionRef1 = collection(db, waktu);
+      onSnapshot(usersCollectionRef1, (snapshot) =>
+        setUsers2(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
       {
         users.map((user) => {
           if (user.Nama == newName) {
@@ -99,6 +129,7 @@ export default function MenuProduk({ navigation }) {
     }
   };
 
+
   useEffect(
     () =>
       onSnapshot(usersCollectionRef, (snapshot) =>
@@ -110,6 +141,13 @@ export default function MenuProduk({ navigation }) {
     () =>
       onSnapshot(usersCollectionRef1, (snapshot) =>
         setUsers2(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      ),
+    []
+  );
+  useEffect(
+    () =>
+      onSnapshot(usersCollectionRef2, (snapshot) =>
+        setUsers1(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       ),
     []
   );
@@ -136,13 +174,14 @@ export default function MenuProduk({ navigation }) {
             alignItems: "center",
             paddingTop: "7%",
             paddingBottom: "3%",
-            marginLeft:"8%",
-            marginRight:"8%", 
+            marginLeft: "8%",
+            marginRight: "8%",
             borderRadius: 10,
             shadowColor: "#000",
             shadowOffset: {
-            width: 0,
-            height: 2},
+              width: 0,
+              height: 2
+            },
             shadowOpacity: 0.25,
             shadowRadius: 4
           }}>
@@ -175,7 +214,8 @@ export default function MenuProduk({ navigation }) {
                   fontWeight: 700,
                   fontSize: "90%",
                   color: "white",
-                }}> Ya </Text>
+                }}
+                  onPress={() => ceknota(newid, Total)}> Ya </Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={{
@@ -205,7 +245,7 @@ export default function MenuProduk({ navigation }) {
         </View>
       </Modal>
 
- 
+
       <View style={{
         flexDirection: "row",
         marginTop: "8%",
@@ -213,9 +253,11 @@ export default function MenuProduk({ navigation }) {
         borderBottomWidth: 1
       }}>
 
-        <TouchableOpacity style={{  marginTop: "4%",
-                                    marginLeft: "4%"  }}
-                          onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
+        <TouchableOpacity style={{
+          marginTop: "4%",
+          marginLeft: "4%"
+        }}
+          onPress={() => navigation.getParent('RightDrawer').openDrawer()}>
           <Image
             source={require('../assets/Sidebar.png')}
             style={{
@@ -237,71 +279,81 @@ export default function MenuProduk({ navigation }) {
         </Text>
 
       </View>
-        
-      <View style={{
-        borderBottomColor: 'lightgray',
-        borderBottomWidth: 1}}>
-        <View style={{ flexDirection: "row", marginTop:"3%", marginBottom:"2%" }}>
-        <Text style={{
-          fontWeight: 700,
-          fontSize: "85%",
-          color: "black",
-          margin: "3%",
-        }}>  Barang : </Text>
-        <TextInput style={{
-          flex:1,
-          backgroundColor: "white",
-          borderRadius: 3,
-          borderWidth: 1,
-          padding: 5,
-          fontSize: "75%", 
-          marginTop: "2%",
-          marginBottom: "2%"
-        }} onChangeText={setNewName}
-          value={newName}>
-        </TextInput>
-        <Text style={{
-          fontWeight: 700,
-          fontSize: "85%",
-          color: "black",
-          margin: "3%",
-        }}>  Jumlah : </Text>
-        <TextInput style={{
-          flex:1,
-          backgroundColor: "white",
-          borderRadius: 3,
-          borderWidth: 1,
-          padding: 5,
-          fontSize: "75%", 
-          marginTop: "2%",
-          marginBottom: "2%",
-          marginRight:"8%",
-          width:"50%"
-        }} onChangeText={setNewqty}
-          value={newqty}>
-        </TextInput>
+
+      <View>
+        <View style={{ flexDirection: "row", marginTop: "3%" }}>
+          <Text style={{
+            fontWeight: 700,
+            fontSize: "85%",
+            color: "black",
+            margin: "3%",
+          }}>  Barang : </Text>
+          <TextInput style={{
+            flex: 1,
+            backgroundColor: "white",
+            borderRadius: 3,
+            borderWidth: 1,
+            padding: 5,
+            fontSize: "75%",
+            marginTop: "2%",
+            marginBottom: "2%"
+          }} onChangeText={setNewName}
+            value={newName}>
+          </TextInput>
+          <Text style={{
+            fontWeight: 700,
+            fontSize: "85%",
+            color: "black",
+            margin: "3%",
+          }}>  Jumlah : </Text>
+          <TextInput style={{
+            flex: 1,
+            backgroundColor: "white",
+            borderRadius: 3,
+            borderWidth: 1,
+            padding: 5,
+            fontSize: "75%",
+            marginTop: "2%",
+            marginBottom: "2%",
+            marginRight: "8%",
+            width: "50%"
+          }} onChangeText={setNewqty}
+            value={newqty}>
+          </TextInput>
+        </View>
+
+        <View style={{ flexDirection: "row", height: "40%" }}>
+          <View style={{ flex: 2.18, marginLeft: "22%" }}>
+            <ScrollView>
+              {users.map((user) => {
+                const Nama1 = newName.toLowerCase();
+                const Nama2 = user.Nama.toLowerCase();
+                if (Nama2.includes(Nama1) && newName != '') {
+                  return (<TouchableOpacity style={{ fontSize: "90%", borderColor: "gainsboro", borderWidth: 1 }}
+                    onPress={() => setNewName(user.Nama)}>{user.Nama}</TouchableOpacity>)
+                }
+              })}
+            </ScrollView>
+          </View>
+
+          <View style={{ flex: 2, height: "50%", marginLeft: "5%", marginTop: "4%", marginBottom: "10%", marginRight: "5%" }}>
+            <TouchableOpacity style={{
+              backgroundColor: "#F24E1E",
+              borderRadius: 15,
+              padding: 6,
+              alignItems: "center",
+            }} onPress={() => createUser(newName, newqty, Total)}>
+              <Text style={{
+                fontWeight: 700,
+                fontSize: "85%",
+                color: "white",
+              }}> Masukan </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
-      <TouchableOpacity style={{
-        backgroundColor: "#F24E1E",
-        borderRadius: 15,
-        marginLeft:"33%",
-        marginBottom:"5%",
-        padding: 6,
-        justifyContent: "center",
-        alignItems: "center",
-        width: "30%"
-      }} onPress={() => createUser(newName, newqty, Total)}>
-        <Text style={{
-          fontWeight: 700,
-          fontSize: "85%",
-          color: "white",
-        }}> Masukan </Text>        
-      </TouchableOpacity>
-      </View>
-
-
-      <DataTable>
+      <DataTable  style={{ borderTopWidth: 1, borderTopColor: 'lightgray' }}>
         <DataTable.Header>
           <DataTable.Title style={{ flex: 1 }}>ID</DataTable.Title>
           <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
@@ -313,82 +365,85 @@ export default function MenuProduk({ navigation }) {
       </DataTable>
 
       <ScrollView>
-      {users2.map((user) => {
-        return (
-          <DataTable>
-            <DataTable.Row>
-              <DataTable.Cell style={{ flex: 1.5 }}>{user.Id}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 3.2 }}>{user.Nama}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
-              <DataTable.Cell style={{ flex: 2.5 }}>
-                <TouchableOpacity style={{borderWidth:1,
-                                          backgroundColor: "white",
-                                          borderRadius: 3,
-                                          padding: 5,
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                          width: "100%"
-                                        }}
-                  onPress={() => editUser(user.id, user.Nama, user.Qty)}>
-                  <Text style={{
-                    fontWeight: 600,
-                    fontSize: "90%",
-                    color: "black",
-                  }}> Edit </Text>
-                </TouchableOpacity>
-              </DataTable.Cell>
-              <DataTable.Cell style={{ flex: 2.5 }}>
-                <TouchableOpacity style={{borderWidth:1,
-                                          backgroundColor: "white",
-                                          borderRadius: 3,
-                                          padding: 5,
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                          width: "101%"
-                                        }}
-                  onPress={() => deleteUser(user.id)}>
-                  <Text style={{
-                    fontWeight: 600,
-                    fontSize: "90%",
-                    color: "black",
-                  }}> Hapus </Text>
-                </TouchableOpacity>
-              </DataTable.Cell>
-            </DataTable.Row>
-          </DataTable>
-        );
-      })}
+        {users2.map((user) => {
+          return (
+            <DataTable>
+              <DataTable.Row>
+                <DataTable.Cell style={{ flex: 1.5 }}>{user.Id}</DataTable.Cell>
+                <DataTable.Cell style={{ flex: 3.2 }}>{user.Nama}</DataTable.Cell>
+                <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
+                <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
+                <DataTable.Cell style={{ flex: 2.5 }}>
+                  <TouchableOpacity style={{
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    borderRadius: 3,
+                    padding: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%"
+                  }}
+                    onPress={() => editUser(user.id, user.Nama, user.Qty, user.Harga)}>
+                    <Text style={{
+                      fontWeight: 600,
+                      fontSize: "90%",
+                      color: "black",
+                    }}> Edit </Text>
+                  </TouchableOpacity>
+                </DataTable.Cell>
+                <DataTable.Cell style={{ flex: 2.5 }}>
+                  <TouchableOpacity style={{
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    borderRadius: 3,
+                    padding: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%"
+                  }}
+                    onPress={() => deleteUser(user.id, user.Harga, user.Qty, user.Nama)}>
+                    <Text style={{
+                      fontWeight: 600,
+                      fontSize: "90%",
+                      color: "black",
+                    }}> Hapus </Text>
+                  </TouchableOpacity>
+                </DataTable.Cell>
+              </DataTable.Row>
+            </DataTable>
+          );
+        })}
       </ScrollView>
 
 
-      <View style={{  
+      <View style={{
         borderTopColor: 'lightgray',
         borderTopWidth: 1,
-        marginTop:"20%"   }}>
-      <View style={{  flexDirection:"row"}}>
-        <Text style={{
-          flex:1,
-          fontWeight: 700,
-          fontSize: "95%",
-          color: "black",
-          margin: "3%",
-        }}>Total</Text>
+        marginTop: "20%"
+      }}>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{
+            flex: 1,
+            fontWeight: 700,
+            fontSize: "95%",
+            color: "black",
+            margin: "3%",
+          }}>Total</Text>
 
-        <Text style={{
-          flex:1,
-          fontWeight: 500,
-          fontSize: "95%",
-          color: "black",
-          margin: "3%",
-        }}> Rp.  {Total} </Text>
-      </View>
+          <Text style={{
+            flex: 1,
+            fontWeight: 500,
+            fontSize: "95%",
+            color: "black",
+            margin: "3%",
+          }}> Rp.  {Total} </Text>
+        </View>
 
-      <TouchableOpacity style={{ 
+        <TouchableOpacity style={{
           backgroundColor: "#F24E1E",
           borderRadius: 3,
-          margin:"3%",
-          marginLeft:"54%",
+          margin: "3%",
+          marginLeft: "54%",
           padding: 5,
           justifyContent: "center",
           alignItems: "center",
