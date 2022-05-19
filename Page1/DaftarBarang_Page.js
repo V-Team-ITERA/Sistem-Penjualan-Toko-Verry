@@ -16,7 +16,12 @@ export default function DaftarBarang({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
+  const [modalVisible4, setModalVisible4] = useState(false);
+  const [modalVisible5, setModalVisible5] = useState(false);
+  const [modalVisible6, setModalVisible6] = useState(false);
   const [newNama, setNewNama] = useState('');
+  const [newName, setNewName] = useState('');
   const [newKB, setNewKB] = useState('');
   const [newStock, setNewStock] = useState('');
   const [newBatas, setNewBatas] = useState('');
@@ -27,9 +32,21 @@ export default function DaftarBarang({ navigation }) {
   const x = "Produk";
   const usersCollectionRef = collection(db, x);
 
+  const cekhapus = async () => {
+    setModalVisible(false);
+    setModalVisible6(true);
+  }
+
   const deleteUser = async (id) => {
-    setModalVisible(!modalVisible);
+    setModalVisible6(false);
+    setModalVisible5(true);
     deleteDoc(id);
+    setNewID(null);
+    setNewNama('');
+    setNewKB('');
+    setNewStock('');
+    setNewBatas('');
+    setNewHarga('');
   };
 
   const editUser = async (id, Nama, KB, Stock, Batas, Harga) => {
@@ -45,6 +62,7 @@ export default function DaftarBarang({ navigation }) {
 
   const updateUser = async (id, Nama, KB, Stock, Batas, Harga) => {
     setModalVisible(!modalVisible);
+    setModalVisible4(true);
     updateDoc(id, {
       Nama: Nama,
       KB: KB,
@@ -60,7 +78,7 @@ export default function DaftarBarang({ navigation }) {
     setNewHarga('');
   }
 
-  const createUser = async (Nama, KB, Stock, Batas, Harga) => {
+  const createUser = async (KB, Nama, Stock, Batas, Harga) => {
     if (Nama == '' || KB == '' || Stock == '' || Batas == '' || Harga == '') {
       setModalVisible1(!modalVisible1);
       setModalVisible2(true)
@@ -71,10 +89,10 @@ export default function DaftarBarang({ navigation }) {
       setNewBatas('');
       setNewHarga('');
     } else {
-      // const usersCollectionRef = collection(db, "Produk");
+      setModalVisible3(true)
       addDoc(usersCollectionRef, {
-        Nama: Nama,
         KB: KB,
+        Nama: Nama,
         Stock: Number(Stock),
         Batas: Number(Batas),
         Harga: Number(Harga)
@@ -85,6 +103,7 @@ export default function DaftarBarang({ navigation }) {
       setNewStock('');
       setNewBatas('');
       setNewHarga('');
+      setModalVisible1(!modalVisible1);
     }
   }
 
@@ -115,18 +134,19 @@ export default function DaftarBarang({ navigation }) {
             alignItems: "center",
             paddingTop: "7%",
             paddingBottom: "3%",
-            marginLeft:"8%",
-            marginRight:"8%", 
+            marginLeft: "8%",
+            marginRight: "8%",
             borderRadius: 10,
             shadowColor: "#000",
             shadowOffset: {
-            width: 0,
-            height: 2},
+              width: 0,
+              height: 2
+            },
             shadowOpacity: 0.25,
             shadowRadius: 4
           }}>
 
-            <View style={{ marginTop:"3%", marginBottom: "8%", paddingRight: "5%" }} >
+            <View style={{ marginTop: "3%", marginBottom: "8%", paddingRight: "5%" }} >
               <Text style={{
                 fontWeight: 650,
                 fontSize: "90%",
@@ -135,7 +155,7 @@ export default function DaftarBarang({ navigation }) {
               </Text>
               <TouchableOpacity style={{
                 marginTop: "10%",
-                marginLeft:"33%",
+                marginLeft: "33%",
                 flex: 1,
                 backgroundColor: "#F24E1E",
                 borderRadius: 3,
@@ -160,6 +180,286 @@ export default function DaftarBarang({ navigation }) {
         </View>
       </Modal>
 
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible6}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginBottom: "5%", paddingRight: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black"
+              }}> Apakah Anda yakin ingin Menghapus ?
+              </Text>
+            </View>
+
+            <View style={{
+              flexDirection: "row",
+              width: "65%",
+              marginTop: "5%",
+              marginBottom: "8%"
+            }}>
+              <TouchableOpacity style={{
+                flex: 1,
+                backgroundColor: "white",
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: "#F24E1E",
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "40%"
+              }}
+                onPress={() => deleteUser(newID)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: "90%",
+                  color: "#F24E1E",
+                }}> Ya </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={{
+                flex: 1,
+                backgroundColor: "#F24E1E",
+                borderRadius: 3,
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "10%",
+                width: "40%"
+              }}
+                onPress={() => setModalVisible6(!modalVisible6)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: "90%",
+                  color: "white",
+                }}> Tidak </Text>
+              </TouchableOpacity>
+            </View>
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible3}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginTop: "3%", marginBottom: "8%", paddingRight: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black"
+              }}> Berhasil Memasukan Data.
+              </Text>
+              <TouchableOpacity style={{
+                marginTop: "10%",
+                marginLeft: "33%",
+                flex: 1,
+                backgroundColor: "#F24E1E",
+                borderRadius: 3,
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "40%"
+              }}
+                onPress={() => setModalVisible3(!modalVisible3)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: 12,
+                  color: "white",
+                }}> Ok </Text>
+              </TouchableOpacity>
+            </View>
+
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible4}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginTop: "3%", marginBottom: "8%", paddingRight: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black"
+              }}> Berhasil Mengubah Data.
+              </Text>
+              <TouchableOpacity style={{
+                marginTop: "10%",
+                marginLeft: "33%",
+                flex: 1,
+                backgroundColor: "#F24E1E",
+                borderRadius: 3,
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "40%"
+              }}
+                onPress={() => setModalVisible4(!modalVisible4)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: 12,
+                  color: "white",
+                }}> Ok </Text>
+              </TouchableOpacity>
+            </View>
+
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible5}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginTop: "3%", marginBottom: "8%", paddingRight: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black"
+              }}> Berhasil Menghapus Data.
+              </Text>
+              <TouchableOpacity style={{
+                marginTop: "10%",
+                marginLeft: "33%",
+                flex: 1,
+                backgroundColor: "#F24E1E",
+                borderRadius: 3,
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "40%"
+              }}
+                onPress={() => setModalVisible5(!modalVisible5)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: 12,
+                  color: "white",
+                }}> Ok </Text>
+              </TouchableOpacity>
+            </View>
+
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
 
       <Modal
         animationType="none"
@@ -167,8 +467,8 @@ export default function DaftarBarang({ navigation }) {
         visible={modalVisible}
       >
         <View style={styles.container}>
-          
-        <View>
+
+          <View>
             <TouchableOpacity style={{
               flex: 1,
               marginTop: "4.25%",
@@ -184,7 +484,7 @@ export default function DaftarBarang({ navigation }) {
               </Image>
             </TouchableOpacity>
           </View>
-          
+
 
           <View style={{
             backgroundColor: "#F24E1E",
@@ -211,8 +511,8 @@ export default function DaftarBarang({ navigation }) {
                 padding: 4,
                 fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
-              }} onChangeText={setNewNama}
-                value={newNama}>
+              }} onChangeText={setNewKB}
+                value={newKB}>
               </TextInput>
             </View>
 
@@ -230,8 +530,8 @@ export default function DaftarBarang({ navigation }) {
                 padding: 4,
                 fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
-              }} onChangeText={setNewKB}
-                value={newKB}>
+              }} onChangeText={setNewNama}
+                value={newNama}>
               </TextInput>
             </View>
 
@@ -303,7 +603,7 @@ export default function DaftarBarang({ navigation }) {
                 alignItems: "center",
                 width: "40%"
               }}
-                onPress={() => deleteUser(newID)}
+                onPress={() => cekhapus()}
               >
                 <Text style={{
                   fontWeight: 700,
@@ -323,7 +623,7 @@ export default function DaftarBarang({ navigation }) {
                 width: "40%"
               }}
                 onPress={() =>
-                  updateUser(newID, newNama, newKB, newStock, newBatas, newHarga)
+                  updateUser(newID, newKB, newNama, newStock, newBatas, newHarga)
                 }>
                 <Text style={{
                   fontWeight: 700,
@@ -390,8 +690,8 @@ export default function DaftarBarang({ navigation }) {
                 padding: 4,
                 fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
-              }} onChangeText={setNewNama}
-                value={newNama}>
+              }} onChangeText={setNewKB}
+                value={newKB}>
               </TextInput>
             </View>
 
@@ -409,8 +709,8 @@ export default function DaftarBarang({ navigation }) {
                 padding: 4,
                 fontSize: "90%", marginTop: "2%",
                 marginBottom: "5%"
-              }} onChangeText={setNewKB}
-                value={newKB}>
+              }} onChangeText={setNewNama}
+                value={newNama}>
               </TextInput>
             </View>
 
@@ -474,11 +774,11 @@ export default function DaftarBarang({ navigation }) {
 
             <View style={{ flexDirection: "row", width: "65%", marginTop: "5%", marginBottom: "8%" }}>
               <Text style={{
-                  fontWeight: 700,
-                  fontSize: "90%",
-                  color: "white",
-                  marginTop: "3%",
-                }}>                  </Text>
+                fontWeight: 700,
+                fontSize: "90%",
+                color: "white",
+                marginTop: "3%",
+              }}>                  </Text>
               <TouchableOpacity style={{
                 flex: 1,
                 backgroundColor: "white",
@@ -490,7 +790,7 @@ export default function DaftarBarang({ navigation }) {
                 width: "40%"
               }}
                 onPress={() =>
-                  createUser(newNama, newKB, newStock, newBatas, newHarga)
+                  createUser(newKB, newNama, newStock, newBatas, newHarga)
                 }>
                 <Text style={{
                   fontWeight: 700,
@@ -500,10 +800,6 @@ export default function DaftarBarang({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-
-
-
-
           <StatusBar style="auto" />
         </View>
       </Modal >
@@ -540,61 +836,93 @@ export default function DaftarBarang({ navigation }) {
           Menu Data Barang
         </Text>
 
+      </View>
+
+      <View style={{
+        marginTop: "6%",
+        marginBottom: "6%",
+        marginLeft: "10%",
+        flexDirection: "row"
+      }}>
+        <TextInput style={{
+          flex: 4.1,
+          backgroundColor: "white",
+          borderRadius: 3,
+          borderWidth: 1,
+          paddingLeft: 10,
+          padding: 2,
+          fontSize: "85%",
+        }} onChangeText={setNewName}
+          value={newName}
+          placeholder="cari barang .."
+        >
+        </TextInput>
+
         <TouchableOpacity style={{
-          margin: "3%",
-          marginLeft: "10%",
-          marginBottom: "3%"
+          flex: 1,
+          marginLeft: "5%",
         }} onPress={() => setModalVisible1(true)}>
           <Image
             source={require('../assets/add.png')}
             style={{
-              height: 25,
-              width: 28
+              height: 30,
+              width: 33
             }}>
           </Image>
         </TouchableOpacity>
+      </View>
+
+      <View style={{
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1
+      }}>
 
       </View>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>ID</DataTable.Title>
-          <DataTable.Title>Nama Barang</DataTable.Title>
-          <DataTable.Title>       Stok</DataTable.Title>
-          <DataTable.Title>Harga</DataTable.Title>
-          <DataTable.Title > </DataTable.Title>
+          <DataTable.Title style={{ flex: 1.2 }}>ID</DataTable.Title>
+          <DataTable.Title style={{ flex: 2.5 }}>Nama Barang</DataTable.Title>
+          <DataTable.Title style={{ flex: 1 }}>Stok</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.1 }}>Harga</DataTable.Title>
+          <DataTable.Title style={{ flex: 1 }}> </DataTable.Title>
         </DataTable.Header>
       </DataTable>
 
       <ScrollView>
-      {users.map((user) => {
-        return (
-          <DataTable>
-            <DataTable.Row>
-              <DataTable.Cell>{user.KB}</DataTable.Cell>
-              <DataTable.Cell>{user.Nama}</DataTable.Cell>
-              <DataTable.Cell>       {user.Stock}</DataTable.Cell>
-              <DataTable.Cell>{user.Harga}</DataTable.Cell>
-              <DataTable.Cell>
-                <TouchableOpacity style={{borderWidth:1,
-                                          backgroundColor: "white",
-                                          borderRadius: 3,
-                                          padding: 5,
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                          width: "100%"
-                }}
-                  onPress={() => editUser(user.id, user.Nama, user.KB, user.Stock, user.Batas, user.Harga)}>
-                  <Text style={{
-                    fontWeight: 600,
-                    fontSize: "90%",
-                    color: "black",
-                  }}> Edit </Text>
-                </TouchableOpacity>
-              </DataTable.Cell>
-            </DataTable.Row>
-          </DataTable>
-        );
-      })}
+        {users.map((user) => {
+          const Nama1 = newName.toLowerCase();
+          const Nama2 = user.Nama.toLowerCase();
+          if (Nama2.includes(Nama1)) {
+            return (
+              <DataTable>
+                <DataTable.Row>
+                  <DataTable.Cell style={{ flex: 1.2 }}>{user.KB}</DataTable.Cell>
+                  <DataTable.Cell style={{ flex: 2.5 }}>{user.Nama}</DataTable.Cell>
+                  <DataTable.Cell style={{ flex: 1 }}>{user.Stock}</DataTable.Cell>
+                  <DataTable.Cell style={{ flex: 1.1 }}>{user.Harga}</DataTable.Cell>
+                  <DataTable.Cell style={{ flex: 1 }}>
+                    <TouchableOpacity style={{
+                      borderWidth: 1,
+                      backgroundColor: "white",
+                      borderRadius: 3,
+                      padding: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%"
+                    }}
+                      onPress={() => editUser(user.id, user.KB, user.Nama, user.Stock, user.Batas, user.Harga)}>
+                      <Text style={{
+                        fontWeight: 600,
+                        fontSize: "90%",
+                        color: "black",
+                      }}> Edit </Text>
+                    </TouchableOpacity>
+                  </DataTable.Cell>
+                </DataTable.Row>
+              </DataTable>
+            );
+          }
+        })}
       </ScrollView>
 
       <StatusBar style="auto" />
