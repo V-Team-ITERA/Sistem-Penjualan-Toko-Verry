@@ -10,7 +10,6 @@ import {
   deleteDoc,
   doc, onSnapshot,
 } from "firebase/firestore";
-import { Row } from "react-native-table-component";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function MenuProduk({ navigation }) {
@@ -20,6 +19,7 @@ export default function MenuProduk({ navigation }) {
   const time = bulan + new Date().getDate() + new Date().getHours() + new Date().getMinutes()
   const tanggal = new Date().getDate();
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [newName, setNewName] = useState('');
   const [newqty, setNewqty] = useState('');
   const [newid, setNewid] = useState('Awal');
@@ -58,6 +58,7 @@ export default function MenuProduk({ navigation }) {
 
   const ceknota = async (x, y) => {
     setNewid('Awal');
+    setModalVisible(false);
     const xy = bulan + new Date().getDate() + new Date().getHours() + new Date().getMinutes();
     setwaktu(xy);
     setusersCollectionRef1(collection(db, waktu));
@@ -86,7 +87,10 @@ export default function MenuProduk({ navigation }) {
   };
 
   const createUser = async (newName, newqty, Total) => {
-    if (newid == 'Awal') {
+    if (newqty % 1 != 0) {
+      setModalVisible2(true)
+    }
+    else if (newid == 'Awal') {
       addDoc(usersCollectionRef2, { Total: 0, IdNota: waktu, Tanggal: tanggal });
       setNewid(waktu);
       const usersCollectionRef1 = collection(db, waktu);
@@ -245,6 +249,78 @@ export default function MenuProduk({ navigation }) {
         </View>
       </Modal>
 
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible2}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginBottom: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black",
+                textAlign: "center"
+              }}> Pastikan Memasukan Angka.
+              </Text>
+            </View>
+
+            <View style={{
+              flexDirection: "row",
+              width: "65%",
+              marginTop: "5%",
+              marginBottom: "8%"
+            }}>
+              <TouchableOpacity style={{
+                flex: 1,
+                backgroundColor: "white",
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: "#F24E1E",
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "10%",
+              }}
+                onPress={() => setModalVisible2(!modalVisible2)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: "90%",
+                  color: "#F24E1E",
+                }}> Ya </Text>
+              </TouchableOpacity>
+
+            </View>
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
 
       <View style={{
         flexDirection: "row",
@@ -318,7 +394,8 @@ export default function MenuProduk({ navigation }) {
             marginRight: "8%",
             width: "50%"
           }} onChangeText={setNewqty}
-            value={newqty}>
+            value={newqty}
+            keyboardType="numeric">
           </TextInput>
         </View>
 
@@ -353,7 +430,7 @@ export default function MenuProduk({ navigation }) {
         </View>
       </View>
 
-      <DataTable  style={{ borderTopWidth: 1, borderTopColor: 'lightgray' }}>
+      <DataTable style={{ borderTopWidth: 1, borderTopColor: 'lightgray' }}>
         <DataTable.Header>
           <DataTable.Title style={{ flex: 1 }}>ID</DataTable.Title>
           <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
