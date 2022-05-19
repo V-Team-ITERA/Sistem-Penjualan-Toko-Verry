@@ -1,21 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TextInput, Text, Image, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, Text, Image, View, Modal, TouchableOpacity } from 'react-native';
 
 export default function Login({ navigation }) {
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [modalVisible2, setModalVisible2] = useState(false);
 
   const ceklogin = async (newUsername, newPassword) => {
     if (newUsername == "owner" && newPassword == "ownerpass") {
       navigation.navigate("MenuProduk")
-    } if (newUsername == "staff" && newPassword == "staffpass") {
+      setNewPassword("")
+      setNewUsername("")
+    } else if (newUsername == "staff" && newPassword == "staffpass") {
       navigation.navigate("MenuProdukPegawai")
+      setNewPassword("")
+      setNewUsername("")
+    } else {
+      setModalVisible2(true)
+      setNewPassword("")
+      setNewUsername("")
     }
   }
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible2}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          marginTop: 22
+        }}>
+
+          <View style={{
+            backgroundColor: "white",
+            flexDirection: "colum",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "7%",
+            paddingBottom: "3%",
+            marginLeft: "8%",
+            marginRight: "8%",
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4
+          }}>
+
+            <View style={{ marginBottom: "5%" }} >
+              <Text style={{
+                fontWeight: 650,
+                fontSize: "90%",
+                color: "black",
+                textAlign: "center"
+              }}> Maaf Nama Pengguna atau Kata Sandi yang anda masukan salah.
+              </Text>
+            </View>
+
+            <View style={{
+              flexDirection: "row",
+              width: "65%",
+              marginTop: "5%",
+              marginBottom: "8%"
+            }}>
+              <TouchableOpacity style={{
+                flex: 1,
+                backgroundColor: "white",
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: "#F24E1E",
+                padding: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "10%",
+              }}
+                onPress={() => setModalVisible2(!modalVisible2)}>
+                <Text style={{
+                  fontWeight: 700,
+                  fontSize: "90%",
+                  color: "#F24E1E",
+                }}> Ya </Text>
+              </TouchableOpacity>
+
+            </View>
+
+          </View>
+
+          <StatusBar style="auto" />
+        </View>
+      </Modal>
       <View style={{
         alignItems: "center",
         justifyContent: "center",
@@ -28,7 +109,7 @@ export default function Login({ navigation }) {
             marginTop: "25%",
           }}>
         </Image>
-        
+
         <Text style={{
           flex: 1,
           fontWeight: 700,
@@ -41,7 +122,7 @@ export default function Login({ navigation }) {
       </View>
 
       <View style={{ flexDirection: "columnn", padding: "8%" }}>
-        
+
 
         <Text style={{ flex: 1, fontSize: "90%" }}> Nama Pengguna  </Text>
 
