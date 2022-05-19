@@ -5,21 +5,23 @@ import { DataTable } from 'react-native-paper';
 import { db } from "../firebase.js";
 import {
     collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc, onSnapshot,
+    onSnapshot,
 } from "firebase/firestore";
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function DaftarBarangPegawai({ navigation }) {
-    
+
     const [modalVisible1, setModalVisible1] = useState(false);
     const [modalVisible2, setModalVisible2] = useState(false);
-
+    const [newName, setNewName] = useState('');
     const [users, setUsers] = useState([]);
     const x = "Produk";
     const usersCollectionRef = collection(db, x);
+
+    const yakeluar = async () => {
+        setModalVisible2(false);
+        navigation.navigate("Login");
+    };
 
     useEffect(
         () =>
@@ -29,7 +31,7 @@ export default function DaftarBarangPegawai({ navigation }) {
         []
     );
     return (
-        
+
         <View style={styles.container}>
             <Modal
                 animationType="none"
@@ -49,24 +51,25 @@ export default function DaftarBarangPegawai({ navigation }) {
                         alignItems: "center",
                         paddingTop: "7%",
                         paddingBottom: "3%",
-                        marginLeft:"8%",
-                        marginRight:"8%", 
+                        marginLeft: "8%",
+                        marginRight: "8%",
                         borderRadius: 10,
                         shadowColor: "#000",
                         shadowOffset: {
-                        width: 0,
-                        height: 2},
+                            width: 0,
+                            height: 2
+                        },
                         shadowOpacity: 0.25,
                         shadowRadius: 4
                     }}>
 
-                    <View style={{ marginBottom: "5%", paddingRight: "5%" }} >
-                        <Text style={{
-                            fontWeight: 650,
-                            fontSize: "90%",
-                            color: "black"
-                        }}> Apakah Anda yakin ingin keluar ?
-                        </Text>
+                        <View style={{ marginBottom: "5%", paddingRight: "5%" }} >
+                            <Text style={{
+                                fontWeight: 650,
+                                fontSize: "90%",
+                                color: "black"
+                            }}> Apakah Anda yakin ingin keluar ?
+                            </Text>
                         </View>
 
                         <View style={{
@@ -87,7 +90,7 @@ export default function DaftarBarangPegawai({ navigation }) {
                                 marginLeft: "10%",
                                 width: "40%"
                             }}
-                            onPress={() => navigation.navigate("Login")}>
+                                onPress={() => yakeluar()}>
                                 <Text style={{
                                     fontWeight: 700,
                                     fontSize: "90%",
@@ -119,102 +122,103 @@ export default function DaftarBarangPegawai({ navigation }) {
                     <StatusBar style="auto" />
                 </View>
             </Modal>
-                    
+
             <Modal
                 animationType="none"
                 transparent={true}
                 visible={modalVisible1}
             >
                 <View style={{
-                flex: 1,
-                justifyContent: "center",
-                marginTop: 22
-                }}>
-
-                <View style={{
-                    backgroundColor: "white",
-                    flexDirection: "colum",
+                    flex: 1,
                     justifyContent: "center",
-                    alignItems: "center",
-                    paddingTop: "7%",
-                    paddingBottom: "3%",
-                    marginLeft:"8%",
-                    marginRight:"8%", 
-                    borderRadius: 10,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                    width: 0,
-                    height: 2},
-                    shadowOpacity: 0.25,
-                    shadowRadius: 4
+                    marginTop: 22
                 }}>
-
-                    <View style={{ marginBottom: "5%", paddingRight: "28%" }} >
-                    <Text style={{
-                        fontWeight: 650,
-                        fontSize: "90%",
-                        color: "black",
-                    }}> Apakah Anda yakin ?
-                    </Text>
-                    </View>
 
                     <View style={{
-                        flexDirection: "row",
-                        width: "65%",
-                        marginTop: "5%",
-                        marginBottom: "8%"
-                    }}>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        backgroundColor: "#F24E1E",
-                        borderRadius: 3,
-                        padding: 5,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "40%"
-                    }}>
-                        <Text style={{
-                        fontWeight: 700,
-                        fontSize: "90%",
-                        color: "white",
-                        }}> Ya </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{
-                        flex: 1,
                         backgroundColor: "white",
-                        borderRadius: 3,
-                        borderWidth: 1,
-                        borderColor: "#F24E1E",
-                        padding: 5,
+                        flexDirection: "colum",
                         justifyContent: "center",
                         alignItems: "center",
-                        marginLeft: "10%",
-                        width: "40%"
-                    }}
-                        onPress={() => setModalVisible1(!modalVisible1)}>
-                        <Text style={{
-                        fontWeight: 700,
-                        fontSize: "90%",
-                        color: "#F24E1E",
-                        }}> Tidak </Text>
-                    </TouchableOpacity>
+                        paddingTop: "7%",
+                        paddingBottom: "3%",
+                        marginLeft: "8%",
+                        marginRight: "8%",
+                        borderRadius: 10,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 4
+                    }}>
+
+                        <View style={{ marginBottom: "5%", paddingRight: "28%" }} >
+                            <Text style={{
+                                fontWeight: 650,
+                                fontSize: "90%",
+                                color: "black",
+                            }}> Apakah Anda yakin ?
+                            </Text>
+                        </View>
+
+                        <View style={{
+                            flexDirection: "row",
+                            width: "65%",
+                            marginTop: "5%",
+                            marginBottom: "8%"
+                        }}>
+                            <TouchableOpacity style={{
+                                flex: 1,
+                                backgroundColor: "#F24E1E",
+                                borderRadius: 3,
+                                padding: 5,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "40%"
+                            }}>
+                                <Text style={{
+                                    fontWeight: 700,
+                                    fontSize: "90%",
+                                    color: "white",
+                                }}> Ya </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{
+                                flex: 1,
+                                backgroundColor: "white",
+                                borderRadius: 3,
+                                borderWidth: 1,
+                                borderColor: "#F24E1E",
+                                padding: 5,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginLeft: "10%",
+                                width: "40%"
+                            }}
+                                onPress={() => setModalVisible1(!modalVisible1)}>
+                                <Text style={{
+                                    fontWeight: 700,
+                                    fontSize: "90%",
+                                    color: "#F24E1E",
+                                }}> Tidak </Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
 
-                </View>
-
-                <StatusBar style="auto" />
+                    <StatusBar style="auto" />
                 </View>
             </Modal>
 
             <View style={{
                 flexDirection: "row",
                 marginTop: "8%",
-                paddingBottom:"8%",
+                paddingBottom: "8%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
-                
+
                 <TouchableOpacity style={{
                     backgroundColor: "#F24E1E",
                     borderRadius: 3,
@@ -223,7 +227,7 @@ export default function DaftarBarangPegawai({ navigation }) {
                     justifyContent: "center",
                     alignItems: "center"
                 }}
-                    onPress={() => setModalVisible2(true)}> 
+                    onPress={() => setModalVisible2(true)}>
                     <Image
                         source={require('../assets/Logout.png')}
                         style={{
@@ -233,7 +237,7 @@ export default function DaftarBarangPegawai({ navigation }) {
                         }}>
                     </Image>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity style={{
                     backgroundColor: "#F24E1E",
                     borderRadius: 3,
@@ -253,8 +257,8 @@ export default function DaftarBarangPegawai({ navigation }) {
                 <TouchableOpacity style={{
                     backgroundColor: "#white",
                     borderRadius: 3,
-                    borderWidth:2,
-                    borderColor:"#F24E1E",
+                    borderWidth: 2,
+                    borderColor: "#F24E1E",
                     padding: 5,
                     marginLeft: '1.5%',
                     justifyContent: "center",
@@ -272,7 +276,7 @@ export default function DaftarBarangPegawai({ navigation }) {
                     backgroundColor: "#F24E1E",
                     borderRadius: 3,
                     marginLeft: '1.5%',
-                    marginRight:"1%",
+                    marginRight: "1%",
                     padding: 5,
                     justifyContent: "center",
                     alignItems: "center"
@@ -290,7 +294,29 @@ export default function DaftarBarangPegawai({ navigation }) {
 
 
             </View>
-            
+
+            <View style={{
+                marginTop: "6%",
+                marginBottom: "6%",
+                marginLeft: "10%",
+                marginRight: "10%",
+                flexDirection: "row"
+            }}>
+                <TextInput style={{
+                    flex: 4.1,
+                    backgroundColor: "white",
+                    borderRadius: 3,
+                    borderWidth: 1,
+                    paddingLeft: 10,
+                    padding: 2,
+                    fontSize: "85%",
+                }} onChangeText={setNewName}
+                    value={newName}
+                    placeholder="cari barang .."
+                >
+                </TextInput>
+            </View>
+
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>ID</DataTable.Title>
@@ -301,18 +327,22 @@ export default function DaftarBarangPegawai({ navigation }) {
             </DataTable>
 
             <ScrollView>
-            {users.map((user) => {
-                return (
-                    <DataTable>
-                        <DataTable.Row>
-                            <DataTable.Cell>{user.KB}</DataTable.Cell>
-                            <DataTable.Cell>{user.Nama}</DataTable.Cell>
-                            <DataTable.Cell>       {user.Stock}</DataTable.Cell>
-                            <DataTable.Cell>{user.Harga}</DataTable.Cell>
-                        </DataTable.Row>
-                    </DataTable>
-                );
-            })}
+                {users.map((user) => {
+                    const Nama1 = newName.toLowerCase();
+                    const Nama2 = user.Nama.toLowerCase();
+                    if (Nama2.includes(Nama1)) {
+                        return (
+                            <DataTable>
+                                <DataTable.Row>
+                                    <DataTable.Cell>{user.KB}</DataTable.Cell>
+                                    <DataTable.Cell>{user.Nama}</DataTable.Cell>
+                                    <DataTable.Cell>       {user.Stock}</DataTable.Cell>
+                                    <DataTable.Cell>{user.Harga}</DataTable.Cell>
+                                </DataTable.Row>
+                            </DataTable>
+                        );
+                    }
+                })}
             </ScrollView>
 
             <StatusBar style="auto" />
