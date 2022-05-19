@@ -86,7 +86,10 @@ export default function MenuProdukPegawai({ navigation }) {
     };
 
     const createUser = async (newName, newqty, Total) => {
-        if (newid == 'Awal') {
+        if (newqty % 1 != 0) {
+            setModalVisible2(true)
+        }
+        else if (newid == 'Awal') {
             addDoc(usersCollectionRef2, { Total: 0, IdNota: waktu, Tanggal: tanggal });
             setNewid(waktu);
             const usersCollectionRef1 = collection(db, waktu);
@@ -335,7 +338,7 @@ export default function MenuProdukPegawai({ navigation }) {
                     <StatusBar style="auto" />
                 </View>
             </Modal>
- 
+
             <View style={{
                 flexDirection: "row",
                 marginTop: "8%",
@@ -459,50 +462,50 @@ export default function MenuProdukPegawai({ navigation }) {
                     </TextInput>
                 </View>
 
-                <View style={{flexDirection:"row", height: "40%"}}>
-                <View style={{ flex:2.18, marginLeft: "22%" }}>
-                    <ScrollView>
-                        {users.map((user) => {
-                            const Nama1 = newName.toLowerCase();
-                            const Nama2 = user.Nama.toLowerCase();
-                            if (Nama2.includes(Nama1) && newName != '') {
-                                return (<TouchableOpacity style={{ fontSize: "90%", borderColor: "gainsboro", borderWidth: 1 }}
-                                    onPress={() => setNewName(user.Nama)}>{user.Nama}</TouchableOpacity>)
-                            }
-                        })}
-                    </ScrollView>
-                </View>
+                <View style={{ flexDirection: "row", height: "40%" }}>
+                    <View style={{ flex: 2.18, marginLeft: "22%" }}>
+                        <ScrollView>
+                            {users.map((user) => {
+                                const Nama1 = newName.toLowerCase();
+                                const Nama2 = user.Nama.toLowerCase();
+                                if (Nama2.includes(Nama1) && newName != '') {
+                                    return (<TouchableOpacity style={{ fontSize: "90%", borderColor: "gainsboro", borderWidth: 1 }}
+                                        onPress={() => setNewName(user.Nama)}>{user.Nama}</TouchableOpacity>)
+                                }
+                            })}
+                        </ScrollView>
+                    </View>
 
-                <View style={{flex:2, height:"50%", marginLeft:"5%",marginTop:"4%",marginBottom:"10%", marginRight:"5%"}}>
-                <TouchableOpacity style={{
-                    backgroundColor: "#F24E1E",
-                    borderRadius: 15,
-                    padding: 6,
-                    alignItems: "center",
-                }} onPress={() => createUser(newName, newqty, Total)}>
-                    <Text style={{
-                        fontWeight: 700,
-                        fontSize: "85%",
-                        color: "white",
-                    }}> Masukan </Text>
-                </TouchableOpacity>
-                </View>
+                    <View style={{ flex: 2, height: "50%", marginLeft: "5%", marginTop: "4%", marginBottom: "10%", marginRight: "5%" }}>
+                        <TouchableOpacity style={{
+                            backgroundColor: "#F24E1E",
+                            borderRadius: 15,
+                            padding: 6,
+                            alignItems: "center",
+                        }} onPress={() => createUser(newName, newqty, Total)}>
+                            <Text style={{
+                                fontWeight: 700,
+                                fontSize: "85%",
+                                color: "white",
+                            }}> Masukan </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
 
             </View>
 
-            <View style={{ borderTopWidth:1, borderTopColor: 'lightgray'}}>
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={{ flex: 0.9 }}>ID</DataTable.Title>
-                    <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
-                    <DataTable.Title style={{ flex: 0.7 }}>Qty</DataTable.Title>
-                    <DataTable.Title style={{ flex: 1.7 }}>Harga</DataTable.Title>
-                    <DataTable.Title style={{ flex: 1.5 }}>Edit</DataTable.Title>
-                    <DataTable.Title style={{ flex: 1.4 }}>Hapus</DataTable.Title>
-                </DataTable.Header>
-            </DataTable>
+            <View style={{ borderTopWidth: 1, borderTopColor: 'lightgray' }}>
+                <DataTable>
+                    <DataTable.Header>
+                        <DataTable.Title style={{ flex: 0.9 }}>ID</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1.8 }}>Nama Barang</DataTable.Title>
+                        <DataTable.Title style={{ flex: 0.7 }}>Qty</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1.7 }}>Harga</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1.5 }}>Edit</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1.4 }}>Hapus</DataTable.Title>
+                    </DataTable.Header>
+                </DataTable>
             </View>
 
 
