@@ -4,10 +4,7 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { db } from "../firebase.js";
 import {
   collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc, onSnapshot,
+  onSnapshot,
 } from "firebase/firestore";
 
 export default function Notifikasi({ navigation }) {
@@ -85,21 +82,7 @@ export default function Notifikasi({ navigation }) {
           justifyContent: "center",
           alignItems: "center"
         }}>
-          <TouchableOpacity style={{
-            backgroundColor: "white",
-            borderRadius: 3,
-            padding: 6,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "65%"
-          }}
-            onPress={() => navigation.navigate("MenuProduk")}>
-            <Text style={{
-              fontWeight: 700,
-              fontSize: 12,
-              color: "#F24E1E"
-            }}> Selesai </Text>
-          </TouchableOpacity>
+
         </View>
 
       </View>
