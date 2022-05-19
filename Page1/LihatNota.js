@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { db } from "../firebase.js";
 import {
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc, onSnapshot,
+    collection, onSnapshot,
 } from "firebase/firestore";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -18,14 +14,9 @@ export default function LihatNota({ navigation, route }) {
     const [users2, setUsers2] = useState([]);
 
     const usersCollectionRef1 = collection(db, time);
-
-    useEffect(
-        () =>
-            onSnapshot(usersCollectionRef1, (snapshot) =>
-                setUsers2(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-            ),
-        []
-    );
+    onSnapshot(usersCollectionRef1, (snapshot) =>
+        setUsers2(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    )
     return (
         <View style={styles.container}>
             <Modal
@@ -46,13 +37,14 @@ export default function LihatNota({ navigation, route }) {
                         alignItems: "center",
                         paddingTop: "7%",
                         paddingBottom: "3%",
-                        marginLeft:"8%",
-                        marginRight:"8%", 
+                        marginLeft: "8%",
+                        marginRight: "8%",
                         borderRadius: 10,
                         shadowColor: "#000",
                         shadowOffset: {
-                        width: 0,
-                        height: 2},
+                            width: 0,
+                            height: 2
+                        },
                         shadowOpacity: 0.25,
                         shadowRadius: 4
                     }}>
@@ -118,46 +110,46 @@ export default function LihatNota({ navigation, route }) {
             <View style={{
                 flexDirection: "row",
                 marginTop: "8%",
-                paddingBottom:"5%",
+                paddingBottom: "5%",
                 borderBottomColor: 'lightgray',
                 borderBottomWidth: 1
             }}>
-                
-            <TouchableOpacity style={{
-                flex: 1,
-                marginTop: "4.25%",
-                marginLeft: "5%"
-                }}
-                onPress={() => navigation.navigate("MenuKeuangan")}>
-                <Image
-                    source={require('../assets/back.png')}
-                    style={{
-                    height: 13,
-                    width: 18,
-                    marginBottom: "5%"
-                    }}>
-                </Image>
-            </TouchableOpacity>
 
-            
-            <TouchableOpacity style={{
-                flex:1,
-                backgroundColor: "#F24E1E",
-                borderRadius: 3,
-                marginLeft:"18%",
-                marginRight:"5%",
-                padding: 3,
-                justifyContent: "center",
-                alignItems: "center",
-                width: "40%"
-            }}
-                onPress={() => setModalVisible(true)}>
-                <Text style={{
-                    fontWeight: 700,
-                    fontSize: "80%",
-                    color: "white",
+                <TouchableOpacity style={{
+                    flex: 1,
+                    marginTop: "4.25%",
+                    marginLeft: "5%"
+                }}
+                    onPress={() => navigation.navigate("MenuKeuangan")}>
+                    <Image
+                        source={require('../assets/back.png')}
+                        style={{
+                            height: 13,
+                            width: 18,
+                            marginBottom: "5%"
+                        }}>
+                    </Image>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity style={{
+                    flex: 1,
+                    backgroundColor: "#F24E1E",
+                    borderRadius: 3,
+                    marginLeft: "18%",
+                    marginRight: "5%",
+                    padding: 3,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "40%"
+                }}
+                    onPress={() => setModalVisible(true)}>
+                    <Text style={{
+                        fontWeight: 700,
+                        fontSize: "80%",
+                        color: "white",
                     }}> Cetak </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
 
             </View>
             <DataTable>
@@ -170,20 +162,20 @@ export default function LihatNota({ navigation, route }) {
             </DataTable>
 
             <ScrollView>
-            {users2.map((user) => {
-                return (
-                    <DataTable>
-                        <DataTable.Row>
-                            <DataTable.Cell style={{ flex: 1.5 }}>{user.Id}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 3 }}>{user.Nama}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
-                        </DataTable.Row>
-                    </DataTable>
-                );
-            })}
+                {users2.map((user) => {
+                    return (
+                        <DataTable>
+                            <DataTable.Row>
+                                <DataTable.Cell style={{ flex: 1.5 }}>{user.Id}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 3 }}>{user.Nama}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 1 }}>{user.Qty}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 2.5 }}>{user.Harga}</DataTable.Cell>
+                            </DataTable.Row>
+                        </DataTable>
+                    );
+                })}
             </ScrollView>
-      
+
 
             <StatusBar style="auto" />
         </View>
